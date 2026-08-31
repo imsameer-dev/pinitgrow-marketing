@@ -28,7 +28,7 @@ export default function FeaturesPage() {
                 {tool.output}
               </p>
             </div>
-            <ProductShot name={tool.shot} />
+            <ProductShot name={tool.shot} priority={index === 0} />
           </div>
           {tool.title === "Top Pins" ? (
             <div className="mt-12">

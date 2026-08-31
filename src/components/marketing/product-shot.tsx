@@ -41,7 +41,7 @@ export function ProductShot({
         alt={alt ?? alts[name]}
         width={1440}
         height={900}
-        priority={priority}
+        loading={priority ? "eager" : "lazy"}
         className="h-auto w-full"
       />
     </SafariFrame>
