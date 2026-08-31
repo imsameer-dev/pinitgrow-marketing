@@ -84,6 +84,15 @@ test("theme control cycles system, light, and dark", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("system theme renders with a light color scheme", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.addInitScript(() => window.localStorage.setItem("theme", "system"));
+  await page.goto("/");
+
+  await expect(page.locator("body")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+});
+
 test("home loads its hero product image eagerly", async ({ page }) => {
   await page.goto("/");
 
@@ -104,6 +113,31 @@ test("features loads its leading product image eagerly", async ({ page }) => {
 
 test("reduced motion disables smooth scrolling", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.addInitScript(() => {
+    const observed = { mounted: false };
+    Object.defineProperty(window, "__lenisObserved", { value: observed });
+
+    const observeRoot = () => {
+      const root = document.documentElement;
+      if (!root) {
+        requestAnimationFrame(observeRoot);
+        return;
+      }
+
+      observed.mounted ||= root.classList.contains("lenis");
+      new MutationObserver((mutations) => {
+        observed.mounted ||= root.classList.contains("lenis");
+        observed.mounted ||= mutations.some((mutation) =>
+          mutation.oldValue?.split(/\s+/).includes("lenis"),
+        );
+      }).observe(root, {
+        attributeFilter: ["class"],
+        attributeOldValue: true,
+      });
+    };
+
+    observeRoot();
+  });
   await page.goto("/");
 
   expect(
@@ -112,30 +146,50 @@ test("reduced motion disables smooth scrolling", async ({ page }) => {
     ),
   ).toBe(true);
   await expect(page.locator("html")).not.toHaveClass(/(^|\s)lenis(?:\s|$)/);
+  expect(
+    await page.evaluate(
+      () =>
+        (
+          window as typeof window & {
+            __lenisObserved: { mounted: boolean };
+          }
+        ).__lenisObserved.mounted,
+    ),
+  ).toBe(false);
 });
 
 test("keyboard focus is visible on primary controls", async ({ page }) => {
   await page.goto("/faq");
 
-  await page.keyboard.press("Tab");
-  const focused = page.locator(":focus");
-  await expect(focused).toBeVisible();
-  expect(
-    await focused.evaluate((element) => {
-      const style = window.getComputedStyle(element);
-      return style.outlineStyle !== "none" || style.boxShadow !== "none";
-    }),
-  ).toBe(true);
+  const tabTo = async (target: ReturnType<typeof page.locator>) => {
+    for (let attempt = 0; attempt < 30; attempt += 1) {
+      await page.keyboard.press("Tab");
+      if (await target.evaluate((element) => element === document.activeElement)) {
+        await expect(target).toBeFocused();
+        return;
+      }
+    }
+    throw new Error("Control was not reachable with the Tab key");
+  };
+
+  const themeToggle = page.getByRole("button", { name: /Color theme/i });
+  await tabTo(themeToggle);
+  await tabTo(page.getByRole("link", { name: "Log in" }).first());
+  await tabTo(page.getByRole("link", { name: "Start free trial" }).first());
 
   const accordion = page.getByRole("button", {
     name: "How long is the trial?",
   });
-  await accordion.focus();
-  await expect(accordion).toBeFocused();
+  await tabTo(accordion);
   expect(
     await accordion.evaluate((element) => {
       const style = window.getComputedStyle(element);
       return style.outlineStyle !== "none" || style.boxShadow !== "none";
     }),
   ).toBe(true);
+
+  await page.keyboard.press("Enter");
+  await expect(accordion).toHaveAttribute("aria-expanded", "true");
+  await page.keyboard.press("Space");
+  await expect(accordion).toHaveAttribute("aria-expanded", "false");
 });
