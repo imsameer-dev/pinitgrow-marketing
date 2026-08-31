@@ -11,5 +11,9 @@ test("home explains the product and hands off to the app", async ({ page }) => {
     "href",
     "https://app.pinitgrow.com/login",
   );
-  await expect(page.getByAltText(/Keyword Explorer/i)).toBeVisible();
+  await expect(
+    page.getByAltText(
+      "PinitGrow Keyword Explorer with an A–Z suggestion table and popularity scores",
+    ),
+  ).toBeVisible();
 });

@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { FaqList } from "@/components/marketing/faq-list";
 import { PricingCard } from "@/components/marketing/pricing-card";
 import { Section } from "@/components/marketing/section";
 import { plans, trialDays } from "@/lib/plans";
 import { faqs } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Pricing",
+  description:
+    "Compare PinitGrow plans and choose the Pinterest research capacity that fits your workflow.",
+};
 
 export default function PricingPage() {
   const billingFaqs = faqs.filter((item) =>

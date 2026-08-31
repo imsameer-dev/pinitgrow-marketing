@@ -6,6 +6,56 @@ test("features lists Keyword Explorer", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Keyword Explorer" })).toBeVisible();
 });
 
+test("routes expose distinct metadata", async ({ page }) => {
+  const routes = [
+    {
+      path: "/",
+      title: /PinitGrow.*Pinterest research/i,
+      description: /keyword explorer/i,
+    },
+    {
+      path: "/features",
+      title: /Features.*PinitGrow/i,
+      description: /Pinterest research tools/i,
+    },
+    {
+      path: "/pricing",
+      title: /Pricing.*PinitGrow/i,
+      description: /plans/i,
+    },
+    {
+      path: "/faq",
+      title: /FAQ.*PinitGrow/i,
+      description: /trial/i,
+    },
+  ];
+
+  for (const route of routes) {
+    await page.goto(route.path);
+    await expect(page).toHaveTitle(route.title);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      "content",
+      route.description,
+    );
+  }
+});
+
+test("product frames identify placeholder pixels and use real dimensions", async ({
+  page,
+}) => {
+  await page.goto("/features");
+
+  const rankTracker = page
+    .getByRole("heading", { name: "Rank Tracker" })
+    .locator("xpath=ancestor::section");
+  await expect(rankTracker.getByText("app.pinitgrow.com/app/rank-tracker")).toBeVisible();
+  const placeholder = rankTracker.getByAltText(
+    "Keyword Explorer interface (placeholder for Rank Tracker)",
+  );
+  await expect(placeholder).toHaveAttribute("width", "1373");
+  await expect(placeholder).toHaveAttribute("height", "833");
+});
+
 test("pricing shows live plan prices", async ({ page }) => {
   await page.goto("/pricing");
   await expect(page.getByText("$9.99")).toBeVisible();
@@ -31,9 +81,17 @@ test("unknown routes show the custom 404", async ({ page }) => {
 test("mobile header exposes site navigation", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
+  await expect(
+    page.getByRole("button", { name: /Color theme (system|light|dark)\./i }),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Menu" }).click();
   const menu = page.getByRole("navigation", { name: "Mobile navigation" });
-  await expect(menu.getByRole("link", { name: "Features", exact: true })).toBeVisible();
+  const featuresLink = menu.getByRole("link", { name: "Features", exact: true });
+  await expect(featuresLink).toBeVisible();
   await expect(menu.getByRole("link", { name: "Pricing", exact: true })).toBeVisible();
   await expect(menu.getByRole("link", { name: "FAQ", exact: true })).toBeVisible();
+  expect((await featuresLink.boundingBox())?.height).toBeGreaterThanOrEqual(40);
+
+  await page.keyboard.press("Escape");
+  await expect(menu).not.toBeVisible();
 });

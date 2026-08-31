@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { CtaBanner } from "@/components/marketing/cta-banner";
 import { ProductShot } from "@/components/marketing/product-shot";
 import { Section } from "@/components/marketing/section";
 import { tools } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Features",
+  description:
+    "Compare PinitGrow's Pinterest research tools for keywords, pins, accounts, boards, and rank tracking.",
+};
 
 export default function FeaturesPage() {
   return (
@@ -28,7 +35,16 @@ export default function FeaturesPage() {
                 {tool.output}
               </p>
             </div>
-            <ProductShot name={tool.shot} priority={index === 0} />
+            <ProductShot
+              name={tool.shot}
+              alt={
+                tool.title === "Keyword Explorer"
+                  ? "PinitGrow Keyword Explorer with an A–Z suggestion table and popularity scores"
+                  : `Keyword Explorer interface (placeholder for ${tool.title})`
+              }
+              url={tool.shotUrl}
+              priority={index === 0}
+            />
           </div>
           {tool.title === "Top Pins" ? (
             <div className="mt-12">

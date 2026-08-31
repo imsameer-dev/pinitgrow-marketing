@@ -10,7 +10,11 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PinitGrow — Pinterest research",
+  metadataBase: new URL("https://pinitgrow.com"),
+  title: {
+    default: "PinitGrow — Pinterest research",
+    template: "%s | PinitGrow",
+  },
   description:
     "Keyword explorer, top pins, accounts, boards, and rank tracking in one cloud workspace.",
 };

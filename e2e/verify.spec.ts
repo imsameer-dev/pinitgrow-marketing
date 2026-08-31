@@ -96,10 +96,11 @@ test("system theme renders with a light color scheme", async ({ page }) => {
 test("home loads its hero product image eagerly", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByAltText(/Keyword Explorer/i)).toHaveAttribute(
-    "loading",
-    "eager",
-  );
+  await expect(
+    page.getByAltText(
+      "PinitGrow Keyword Explorer with an A–Z suggestion table and popularity scores",
+    ),
+  ).toHaveAttribute("loading", "eager");
 });
 
 test("features loads its leading product image eagerly", async ({ page }) => {
@@ -156,6 +157,37 @@ test("reduced motion disables smooth scrolling", async ({ page }) => {
         ).__lenisObserved.mounted,
     ),
   ).toBe(false);
+});
+
+test("number tickers never reset below their server-rendered value", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const ticker = page
+    .locator("li")
+    .filter({ hasText: "keyword suggestions from one seed" })
+    .locator("span");
+  const observed = await ticker.evaluate(
+    (element) =>
+      new Promise<number[]>((resolve) => {
+        const values = [Number.parseInt(element.textContent ?? "", 10)];
+        const observer = new MutationObserver(() => {
+          values.push(Number.parseInt(element.textContent ?? "", 10));
+        });
+        observer.observe(element, {
+          characterData: true,
+          childList: true,
+          subtree: true,
+        });
+        window.setTimeout(() => {
+          observer.disconnect();
+          resolve(values);
+        }, 900);
+      }),
+  );
+
+  expect(Math.min(...observed)).toBe(364);
 });
 
 test("keyboard focus is visible on primary controls", async ({ page }) => {

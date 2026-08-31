@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AppLink } from "@/components/marketing/app-link";
 import { BentoGrid } from "@/components/marketing/bento-grid";
@@ -12,6 +13,12 @@ import { Section } from "@/components/marketing/section";
 import { TestimonialMarquee } from "@/components/marketing/testimonial-marquee";
 import { Button } from "@/components/ui/button";
 import { faqs, faqPreviewIds, hero, walkthrough } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: { absolute: "PinitGrow — Pinterest research" },
+  description:
+    "Use Keyword Explorer, top pins, account and board research, and rank tracking in one cloud Pinterest workspace.",
+};
 
 export default function HomePage() {
   const preview = faqPreviewIds.map((index) => faqs[index]);
@@ -40,7 +47,12 @@ export default function HomePage() {
               {hero.trialNote}
             </p>
           </div>
-          <ProductShot name="keywords" priority />
+          <ProductShot
+            name="keywords"
+            alt="PinitGrow Keyword Explorer with an A–Z suggestion table and popularity scores"
+            url="app.pinitgrow.com/app/keywords"
+            priority
+          />
         </div>
       </section>
 
@@ -57,6 +69,7 @@ export default function HomePage() {
               body={item.body}
               href={item.href}
               shot={item.shot}
+              shotUrl={item.shotUrl}
               imageLeft={index % 2 === 1}
             />
           ))}

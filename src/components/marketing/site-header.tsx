@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppLink } from "@/components/marketing/app-link";
 import { ThemeToggle } from "@/components/marketing/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -10,13 +11,25 @@ import { nav } from "@/lib/site";
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/90 backdrop-blur">
       <div className="relative mx-auto flex h-[var(--header-height)] w-full max-w-[var(--page-max-width)] items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center" aria-label="PinitGrow home">
-          <img
+          <Image
             src="/brand/pinitgrow-logo.svg"
             alt="PinitGrow"
+            width={200}
+            height={140}
             className="h-8 w-auto"
           />
         </Link>
@@ -63,7 +76,7 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  className="flex min-h-10 items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
@@ -71,11 +84,11 @@ export function SiteHeader() {
               ))}
               <AppLink
                 path="/login"
-                className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                className="flex min-h-10 items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
               >
                 Log in
               </AppLink>
-              <Button className="mt-2" asChild>
+              <Button className="mt-2 min-h-10" asChild>
                 <AppLink path="/register">Start free trial</AppLink>
               </Button>
             </div>

@@ -11,10 +11,6 @@ export const productShots: Record<ProductShotName, { light: string; dark?: strin
   keywords: { light: "/product/keywords-light.png" },
 };
 
-const alts: Record<ProductShotName, string> = {
-  keywords: "PinitGrow Keyword Explorer with an A–Z suggestion table and popularity scores",
-};
-
 export function ProductShot({
   name,
   alt,
@@ -22,9 +18,9 @@ export function ProductShot({
   url,
 }: {
   name: ProductShotName;
-  alt?: string;
+  alt: string;
   priority?: boolean;
-  url?: string;
+  url: string;
 }) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -38,9 +34,9 @@ export function ProductShot({
     <SafariFrame url={url}>
       <Image
         src={src}
-        alt={alt ?? alts[name]}
-        width={1440}
-        height={900}
+        alt={alt}
+        width={1373}
+        height={833}
         loading={priority ? "eager" : "lazy"}
         className="h-auto w-full"
       />

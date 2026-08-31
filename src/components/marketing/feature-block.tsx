@@ -10,12 +10,14 @@ export function FeatureBlock({
   body,
   href,
   shot,
+  shotUrl,
   imageLeft = false,
 }: {
   title: string;
   body: string;
   href?: string;
   shot: ProductShotName;
+  shotUrl: string;
   imageLeft?: boolean;
 }) {
   return (
@@ -33,7 +35,11 @@ export function FeatureBlock({
         ) : null}
       </div>
       <div className={cn(imageLeft && "md:order-1")}>
-        <ProductShot name={shot} alt={`${title} product view`} />
+        <ProductShot
+          name={shot}
+          alt={`Keyword Explorer interface (placeholder for ${title})`}
+          url={shotUrl}
+        />
       </div>
     </div>
   );

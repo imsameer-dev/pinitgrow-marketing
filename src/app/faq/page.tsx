@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { FaqList } from "@/components/marketing/faq-list";
 import { Section } from "@/components/marketing/section";
 import { faqs } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Answers about PinitGrow's 3-day trial, Pinterest research tools, billing, and cloud workspace.",
+};
 
 export default function FaqPage() {
   return (
