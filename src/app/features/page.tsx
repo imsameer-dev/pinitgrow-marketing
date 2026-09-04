@@ -1,67 +1,62 @@
 import type { Metadata } from "next";
 import { CtaBanner } from "@/components/marketing/cta-banner";
 import { ProductShot } from "@/components/marketing/product-shot";
-import { Section } from "@/components/marketing/section";
-import { tools } from "@/lib/site";
+import { Container, Section, SectionHeading } from "@/components/marketing/section";
+import { features } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Compare PinitGrow's Pinterest research tools for keywords, pins, accounts, boards, and rank tracking.",
+    "Keyword Explorer, Ideas, Top Pins, Pin Stats, Account Explorer, Board Explorer, Rank Tracker, and Trends in one Pinterest research workspace.",
 };
 
 export default function FeaturesPage() {
   return (
     <main>
       <Section>
-        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-          Every research tool in one workspace.
-        </h1>
-        <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
-          Cloud access, not a desktop install.
-        </p>
-      </Section>
-      {tools.map((tool, index) => (
-        <Section key={tool.title}>
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div className={index % 2 ? "md:order-2" : undefined}>
-              <h2 className="text-xl font-semibold tracking-tight">{tool.title}</h2>
-              <p className="mt-3 text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">You type: </span>
-                {tool.input}
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">You get: </span>
-                {tool.output}
-              </p>
-            </div>
-            <ProductShot
-              name={tool.shot}
-              alt={
-                tool.title === "Keyword Explorer"
-                  ? "PinitGrow Keyword Explorer with an A–Z suggestion table and popularity scores"
-                  : `Keyword Explorer interface (placeholder for ${tool.title})`
-              }
-              url={tool.shotUrl}
-              priority={index === 0}
-            />
+        <Container>
+          <SectionHeading
+            kicker="Product"
+            title="Every tool answers a publishing decision."
+            lead="Start from a seed keyword, reverse-engineer the pins that already rank, and track movement so your next piece of content is based on evidence."
+          />
+          <div className="space-y-20">
+            {features.map((feature, index) => (
+              <article
+                key={feature.id}
+                id={feature.id}
+                className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2"
+              >
+                <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
+                  <p className="text-xs font-black tracking-[0.12em] text-primary uppercase">
+                    {feature.badge}
+                  </p>
+                  <h3 className="mt-2 text-3xl font-semibold tracking-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-3 text-base text-muted-foreground">{feature.body}</p>
+                  <dl className="mt-6 grid gap-3 text-sm">
+                    <div>
+                      <dt className="font-semibold">You start with</dt>
+                      <dd className="text-muted-foreground">{feature.input}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold">You get</dt>
+                      <dd className="text-muted-foreground">{feature.output}</dd>
+                    </div>
+                  </dl>
+                </div>
+                <ProductShot
+                  name={feature.shot}
+                  title={feature.title}
+                  className={index % 2 === 1 ? "lg:order-1" : undefined}
+                />
+              </article>
+            ))}
           </div>
-          {tool.title === "Top Pins" ? (
-            <div className="mt-12">
-              <CtaBanner
-                title="Try Top Pins on your niche"
-                body="Open the 3-day trial and run a keyword you already publish."
-              />
-            </div>
-          ) : null}
-        </Section>
-      ))}
-      <Section>
-        <CtaBanner
-          title="The workspace is on app.pinitgrow.com"
-          body="Create an account in the app. This site does not take passwords."
-        />
+        </Container>
       </Section>
+      <CtaBanner />
     </main>
   );
 }

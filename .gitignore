@@ -1,5 +1,6 @@
 ﻿node_modules/
 .next/
+.env
 .env.local
 .env*.local
 dist/
@@ -7,3 +8,5 @@ coverage/
 test-results/
 playwright-report/
 .superpowers/
+*.tsbuildinfo
+e2e/*.png

@@ -1,35 +1,66 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
-import { LenisProvider } from "@/components/providers/lenis-provider";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { site } from "@/lib/site";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pinitgrow.com"),
+  metadataBase: new URL(site.url),
   title: {
-    default: "PinitGrow — Pinterest research",
+    default: "PinitGrow — Pinterest Research Intelligence",
     template: "%s | PinitGrow",
   },
-  description:
-    "Keyword explorer, top pins, accounts, boards, and rank tracking in one cloud workspace.",
+  description: site.description,
+  openGraph: {
+    title: "PinitGrow — Pinterest Research Intelligence",
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
+    type: "website",
+    images: [{ url: "/product/keyword-explorer-live.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PinitGrow — Pinterest Research Intelligence",
+    description: site.description,
+    images: ["/product/keyword-explorer-live.png"],
+  },
+  icons: { icon: "/brand/pinitgrow-logo.svg" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: site.name,
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  url: site.url,
+  description: site.description,
+  offers: {
+    "@type": "Offer",
+    price: "9.99",
+    priceCurrency: "USD",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="min-h-screen font-sans">
-        <ThemeProvider>
-          <LenisProvider>
-            <SiteHeader />
-            {children}
-            <SiteFooter />
-          </LenisProvider>
-        </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <SiteHeader />
+        {children}
+        <SiteFooter />
       </body>
     </html>
   );

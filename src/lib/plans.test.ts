@@ -1,17 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { plans } from "./plans";
+import { plans, trialDays } from "./plans";
 
 describe("plans", () => {
-  it("matches live Laravel prices and codes", () => {
-    expect(plans.map((p) => [p.code, p.priceLabel])).toEqual([
-      ["creator", "$9.99"],
-      ["professional", "$29.99"],
-      ["studio", "$85.99"],
+  it("matches live Laravel prices, names, and codes", () => {
+    expect(trialDays).toBe(3);
+    expect(plans.map((p) => [p.code, p.name, p.priceLabel])).toEqual([
+      ["creator", "Creator", "$9.99"],
+      ["professional", "Professional", "$29.99"],
+      ["studio", "Studio", "$85.99"],
     ]);
     expect(plans.find((p) => p.code === "professional")?.featured).toBe(true);
   });
 
-  it("lists the same comparison rows as the Nuxt plans page", () => {
+  it("lists the live Laravel entitlements", () => {
     const creator = plans[0];
     expect(creator.rows.map((r) => r.label)).toEqual([
       "Keyword Explorer",
@@ -21,11 +22,27 @@ describe("plans", () => {
       "Account Explorer",
       "Board Explorer",
       "New research projects",
+      "Rank Tracker",
+      "Search Tracker",
       "Maximum pins/search",
       "Stored projects",
       "Active trackers",
       "Tracker history",
     ]);
-    expect(creator.rows[0]?.value).toBe("20/day");
+    expect(creator.rows.map((r) => r.value)).toEqual([
+      "20/day",
+      "5/day",
+      "3/day",
+      "5/day",
+      "5/day",
+      "5/day",
+      "2/day",
+      "5/day",
+      "5/day",
+      "100",
+      "10",
+      "5",
+      "30 days",
+    ]);
   });
 });

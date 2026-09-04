@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PinitGrow — Pinterest Research Intelligence</title>
+<meta name="description" content="Find Pinterest keywords, winning pins, boards, accounts, trends, and ranking opportunities in one research platform." />
+<style>
+:root{
+  --bg:#fbfaf8;
+  --surface:#ffffff;
+  --surface-2:#f6f3ef;
+  --ink:#141414;
+  --muted:#6f6b66;
+  --line:#e9e4de;
+  --red:#e53935;
+  --red-dark:#c62828;
+  --green:#2e9d59;
+  --green-soft:#eaf7ef;
+  --amber:#f5b942;
+  --shadow:0 22px 70px rgba(35,29,22,.08);
+  --radius:24px;
+  --radius-sm:16px;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.5;
+}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+.nav{
+  position:sticky;top:0;z-index:20;
+  background:rgba(251,250,248,.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(233,228,222,.85);
+}
+.nav-inner{
+  height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px}
+.brand-mark{
+  width:34px;height:34px;border-radius:11px;background:var(--ink);display:grid;place-items:center;color:#fff;
+  position:relative;overflow:hidden
+}
+.brand-mark:after{content:"";width:16px;height:16px;border:5px solid var(--red);border-radius:50%}
+.nav-links{display:flex;gap:24px;color:#494540;font-size:14px}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:12px;padding:13px 18px;font-weight:700;font-size:14px;border:1px solid transparent;transition:.2s ease
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--red);color:#fff;box-shadow:0 10px 26px rgba(229,57,53,.22)}
+.btn-primary:hover{background:var(--red-dark)}
+.btn-secondary{background:#fff;border-color:#dcd5cd}
+.btn-ghost{color:#4f4a45}
+.hero{padding:78px 0 42px}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:58px;align-items:center}
+.eyebrow{
+  display:inline-flex;gap:8px;align-items:center;padding:7px 10px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:#514d48
+}
+.eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+h1{
+  font-size:clamp(46px,6vw,76px);line-height:.98;letter-spacing:-.055em;margin:18px 0 24px;max-width:760px
+}
+.hero .accent{color:var(--red)}
+.hero p{font-size:19px;color:#625d57;max-width:650px;margin:0 0 28px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.micro{display:flex;gap:20px;flex-wrap:wrap;color:#77716a;font-size:13px;margin-top:18px}
+.micro span:before{content:"✓";color:var(--green);font-weight:900;margin-right:6px}
+.hero-card{
+  background:linear-gradient(180deg,#171717,#222);
+  border-radius:28px;padding:14px;box-shadow:0 30px 100px rgba(0,0,0,.18)
+}
+.app{
+  background:#101113;border-radius:18px;border:1px solid #323438;overflow:hidden;color:#f5f5f5
+}
+.app-top{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #2b2d30}
+.app-top strong{font-size:13px}
+.app-body{display:grid;grid-template-columns:54px 1fr}
+.sidebar{border-right:1px solid #2c2f33;padding:12px 8px;display:flex;flex-direction:column;gap:10px}
+.side-dot{height:34px;border-radius:10px;background:#1d2023;display:grid;place-items:center;font-size:12px;color:#9a9fa6}
+.side-dot.active{background:#f6f6f6;color:#111}
+.panel{padding:18px}
+.searchbar{display:flex;gap:8px}
+.searchbar input{
+  flex:1;background:#181a1d;color:#e8e8e8;border:1px solid #303338;border-radius:11px;padding:13px 14px;outline:none
+}
+.searchbar button{border:0;background:var(--red);color:#fff;border-radius:11px;padding:0 16px;font-weight:800}
+.score-row{display:grid;grid-template-columns:1.2fr repeat(3,.85fr);gap:9px;margin-top:12px}
+.metric{background:#17191c;border:1px solid #303338;border-radius:12px;padding:13px}
+.metric small{display:block;color:#9297a0;font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.metric b{display:block;margin-top:5px;font-size:18px}
+.metric .good{color:#55d37f}
+.dashboard-grid{display:grid;grid-template-columns:1.45fr .75fr;gap:10px;margin-top:10px}
+.mock-table,.right-stack>div{background:#17191c;border:1px solid #303338;border-radius:12px}
+.mock-table{padding:13px}
+.mock-table h4,.right-stack h4{font-size:12px;margin:0 0 11px}
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:24px 1fr 54px 52px;gap:8px;color:#c9ccd0;font-size:10px;align-items:center}
+.thumb{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,#f3c892,#8b5a34)}
+.right-stack{display:grid;gap:10px}
+.right-stack>div{padding:12px}
+.kws{display:grid;gap:8px}
+.kw{display:flex;justify-content:space-between;font-size:10px;color:#d5d7da}
+.spark{height:54px;background:linear-gradient(180deg,transparent,rgba(46,157,89,.1));position:relative;border-radius:8px;overflow:hidden}
+.spark svg{position:absolute;inset:0;width:100%;height:100%}
+.trust{padding:36px 0 18px}
+.trust-label{text-align:center;color:#77716a;font-size:13px;margin-bottom:22px}
+.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;align-items:center}
+.logo-pill{text-align:center;font-weight:800;color:#948f88;font-size:16px;letter-spacing:-.02em}
+.section{padding:96px 0}
+.section.soft{background:var(--surface-2);border-top:1px solid #eee8e2;border-bottom:1px solid #eee8e2}
+.section-head{max-width:760px;margin-bottom:42px}
+.kicker{color:var(--red);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+h2{font-size:clamp(36px,4vw,56px);line-height:1.02;letter-spacing:-.045em;margin:10px 0 15px}
+.lead{font-size:18px;color:#6f6962;max-width:720px}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.problem,.solution{
+  padding:24px;border-radius:20px;border:1px solid var(--line);background:#fff;display:flex;gap:16px;align-items:flex-start
+}
+.problem .icon{background:#fff0ef;color:var(--red)}
+.solution .icon{background:var(--green-soft);color:var(--green)}
+.icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:900;flex:0 0 42px}
+.problem h3,.solution h3{margin:1px 0 7px;font-size:18px}
+.problem p,.solution p{margin:0;color:#766f68;font-size:14px}
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.feature{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;min-height:245px;
+  transition:.2s ease
+}
+.feature:hover{transform:translateY(-4px);box-shadow:0 16px 50px rgba(35,29,22,.08)}
+.feature-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.feature-icon{width:34px;height:34px;border-radius:10px;background:#f7f3f0;display:grid;place-items:center;font-weight:900}
+.badge{font-size:10px;padding:5px 8px;border-radius:999px;background:#f3f7f4;color:#2f7e4c;font-weight:800}
+.mini-ui{border:1px solid #eee8e2;border-radius:14px;padding:12px;background:#fcfbfa;margin-bottom:14px;min-height:102px}
+.mini-line{height:8px;border-radius:999px;background:#e9e5e0;margin:7px 0}
+.mini-line.red{background:#f7c4c2}
+.feature h3{font-size:17px;margin:0 0 7px}
+.feature p{font-size:13px;color:#756f68;margin:0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px}
+.num{width:36px;height:36px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:900;margin-bottom:18px}
+.step h3{font-size:19px;margin:0 0 8px}
+.step p{color:#766f68;font-size:14px;margin:0 0 18px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}
+.stat b{display:block;font-size:31px;letter-spacing:-.04em}
+.stat span{color:#777169;font-size:13px}
+.deep{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center;margin:72px 0}
+.deep:nth-child(even) .deep-copy{order:2}
+.deep:nth-child(even) .product-card{order:1}
+.deep-copy .tag{display:inline-flex;width:34px;height:34px;border-radius:10px;background:var(--red);color:#fff;align-items:center;justify-content:center;font-weight:900}
+.deep-copy h3{font-size:34px;line-height:1.06;letter-spacing:-.035em;margin:14px 0}
+.deep-copy p{font-size:16px;color:#6f6962;margin:0}
+.product-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
+.product-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.product-bar strong{font-size:13px}
+.ui-table{border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.ui-head,.ui-r{display:grid;grid-template-columns:1.5fr .7fr .7fr .7fr;gap:8px;padding:10px 12px;font-size:11px}
+.ui-head{background:#f7f5f2;color:#77716a;font-weight:800}
+.ui-r{border-top:1px solid #eee9e3}
+.pos{color:var(--green);font-weight:900}
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.quote{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}
+.stars{color:#f0aa2e;letter-spacing:2px}
+.quote p{font-size:15px;color:#4f4a45;min-height:90px}
+.person{display:flex;align-items:center;gap:10px;margin-top:16px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d7b29f,#6f5042)}
+.person small{display:block;color:#8a847d}
+.pricing-top{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:28px}
+.toggle{display:inline-flex;background:#eee9e4;border-radius:12px;padding:4px}
+.toggle span{padding:9px 13px;border-radius:9px;font-size:12px;font-weight:800;color:#77716a}
+.toggle .active{background:#fff;color:#111;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.plan{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;position:relative}
+.plan.popular{border:2px solid var(--red);box-shadow:0 20px 60px rgba(229,57,53,.12)}
+.ribbon{position:absolute;top:14px;right:14px;background:var(--red);color:#fff;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900}
+.plan h3{margin:0;font-size:20px}
+.price{font-size:44px;font-weight:900;letter-spacing:-.05em;margin:14px 0 2px}
+.price span{font-size:14px;color:#77716a;font-weight:600}
+.plan ul{list-style:none;padding:0;margin:20px 0;display:grid;gap:10px}
+.plan li{font-size:14px;color:#514c47}
+.plan li:before{content:"✓";color:var(--green);font-weight:900;margin-right:8px}
+.plan .btn{width:100%}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.faq-item strong{display:flex;justify-content:space-between}
+.faq-item p{margin:10px 0 0;color:#766f68;font-size:13px}
+.final{
+  margin:30px auto 0;width:min(1180px,calc(100% - 40px));background:linear-gradient(135deg,#d92f2b,#f14d48);
+  color:#fff;border-radius:28px;padding:58px 46px;text-align:center;overflow:hidden;position:relative
+}
+.final h2{margin-top:0}
+.final p{max-width:650px;margin:0 auto 24px;color:#ffecea;font-size:17px}
+.final .btn{background:#fff;color:#b91f1b}
+footer{padding:50px 0 30px}
+.footer-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px}
+footer h4{font-size:13px;margin:0 0 12px}
+footer a{display:block;color:#7b756e;font-size:13px;margin:7px 0}
+.footer-copy{color:#7b756e;font-size:13px;max-width:260px}
+.bottom{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#8b857e;font-size:12px}
+
+@media(max-width:1000px){
+  .nav-links{display:none}
+  .hero-grid,.deep{grid-template-columns:1fr}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+  .logos{grid-template-columns:repeat(3,1fr)}
+  .deep:nth-child(even) .deep-copy,.deep:nth-child(even) .product-card{order:initial}
+  .pricing,.testimonials{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:720px){
+  .container{width:min(100% - 24px,var(--max))}
+  .hero{padding-top:48px}
+  h1{font-size:48px}
+  .hero-grid{gap:34px}
+  .score-row{grid-template-columns:1fr 1fr}
+  .dashboard-grid{grid-template-columns:1fr}
+  .problem-grid,.steps,.stat-grid,.faq,.feature-grid{grid-template-columns:1fr}
+  .logos{grid-template-columns:repeat(2,1fr)}
+  .nav-actions .btn-ghost{display:none}
+  .final{width:calc(100% - 24px);padding:42px 22px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .bottom{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#"><span class="brand-mark"></span><span>PinitGrow</span></a>
+    <nav class="nav-links">
+      <a href="#features">Product</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#usecases">Use Cases</a>
+      <a href="#resources">Resources</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="#">Log in</a>
+      <a class="btn btn-primary" href="#pricing">Start Free Trial</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="eyebrow-dot"></span> Pinterest research intelligence for serious growth</span>
+      <h1>Stop guessing what works on <span class="accent">Pinterest.</span></h1>
+      <p>PinitGrow shows you what people search, which pins are winning, who owns the niche, and where fresh opportunities are moving before everyone else sees them.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#pricing">Start Free Trial →</a>
+        <a class="btn btn-secondary" href="#features">See How It Works</a>
+      </div>
+      <div class="micro">
+        <span>No credit card required</span>
+        <span>5-day free trial</span>
+        <span>Cancel anytime</span>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="app">
+        <div class="app-top"><strong>Keyword Explorer</strong><span style="font-size:11px;color:#8d9198">PinitGrow Studio</span></div>
+        <div class="app-body">
+          <div class="sidebar">
+            <div class="side-dot active">⌕</div><div class="side-dot">◫</div><div class="side-dot">↗</div><div class="side-dot">◎</div><div class="side-dot">▥</div>
+          </div>
+          <div class="panel">
+            <div class="searchbar"><input value="easy weeknight dinners" readonly><button>Explore</button></div>
+            <div class="score-row">
+              <div class="metric"><small>Opportunity Score</small><b class="good">78 / 100</b></div>
+              <div class="metric"><small>Search Demand</small><b>12.4K</b></div>
+              <div class="metric"><small>Competition</small><b>Medium</b></div>
+              <div class="metric"><small>Freshness</small><b class="good">High</b></div>
+            </div>
+            <div class="dashboard-grid">
+              <div class="mock-table">
+                <h4>Top Pins</h4>
+                <div class="rows">
+                  <div class="row"><span>1</span><span>20 Easy Weeknight Dinners</span><span>25.4K</span><span>4.2%</span></div>
+                  <div class="row"><span>2</span><span>30-Minute Dinner Ideas</span><span>18.7K</span><span>3.8%</span></div>
+                  <div class="row"><span>3</span><span>Healthy Family Meals</span><span>16.2K</span><span>3.1%</span></div>
+                  <div class="row"><span>4</span><span>Budget Dinner Recipes</span><span>12.8K</span><span>2.8%</span></div>
+                </div>
+              </div>
+              <div class="right-stack">
+                <div>
+                  <h4>Related Keywords</h4>
+                  <div class="kws">
+                    <div class="kw"><span>quick dinners</span><b>8.3K</b></div>
+                    <div class="kw"><span>family meals</span><b>7.4K</b></div>
+                    <div class="kw"><span>meal prep ideas</span><b>6.8K</b></div>
+                  </div>
+                </div>
+                <div>
+                  <h4>Ranking Movement <span style="color:#55d37f">+123</span></h4>
+                  <div class="spark"><svg viewBox="0 0 100 50" preserveAspectRatio="none"><polyline fill="none" stroke="#55d37f" stroke-width="3" points="0,42 10,38 20,40 30,28 40,31 50,18 60,23 70,11 80,15 90,6 100,9"/></svg></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="container">
+    <div class="trust-label">Built for bloggers, niche site owners, affiliate marketers, creators and agencies</div>
+    <div class="logos">
+      <div class="logo-pill">NicheWorks</div><div class="logo-pill">ContentFuel</div><div class="logo-pill">Pinfluence</div>
+      <div class="logo-pill">RankCraft</div><div class="logo-pill">CreatorLab</div><div class="logo-pill">SiteSprout</div>
+    </div>
+  </div>
+</section>
+
+<section class="section soft" id="usecases">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">The problem</div>
+      <h2>Pinterest research is scattered. Your decisions shouldn’t be.</h2>
+      <p class="lead">Most marketers jump between Pinterest search, spreadsheets, trend tools, random boards, and manual pin checking. PinitGrow turns that mess into one decision system.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem"><div class="icon">?</div><div><h3>Guessing what people search</h3><p>You publish around ideas that feel right instead of queries Pinterest already proves people want.</p></div></div>
+      <div class="solution"><div class="icon">✓</div><div><h3>Find demand before you create</h3><p>Expand seed keywords across A–Z and 0–9, compare opportunity, and surface viable research clusters fast.</p></div></div>
+      <div class="problem"><div class="icon">↘</div><div><h3>No visibility into what ranks</h3><p>You see pins in the feed, but not the titles, engagement, freshness, boards, creators, and movement behind them.</p></div></div>
+      <div class="solution"><div class="icon">↗</div><div><h3>Reverse-engineer the winners</h3><p>See Top Pins, Pin Stats, leading boards, creator accounts, and ranking momentum in one research view.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">One research stack</div>
+      <h2>Everything you need to understand a Pinterest niche.</h2>
+      <p class="lead">No filler tools. Every module answers a specific decision you need to make before you publish, rank, or scale.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature"><div class="feature-top"><div class="feature-icon">⌕</div><span class="badge">Discover</span></div><div class="mini-ui"><div class="mini-line red" style="width:80%"></div><div class="mini-line" style="width:65%"></div><div class="mini-line" style="width:74%"></div></div><h3>Keyword Explorer</h3><p>Expand a seed keyword across the full A–Z and 0–9 sweep and find hidden long-tail opportunities.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">✦</div><span class="badge">Ideate</span></div><div class="mini-ui"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px"><div style="height:70px;border-radius:10px;background:#e9c49a"></div><div style="height:70px;border-radius:10px;background:#bd8d5b"></div><div style="height:70px;border-radius:10px;background:#d8b38c"></div></div></div><h3>Ideas</h3><p>Find Pinterest-native idea clusters, questions, related topics, and fresh creative angles around any niche.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">♛</div><span class="badge">Analyze</span></div><div class="mini-ui"><div class="mini-line red"></div><div class="mini-line" style="width:90%"></div><div class="mini-line" style="width:72%"></div><div class="mini-line" style="width:82%"></div></div><h3>Top Pins</h3><p>See which pins are actually ranking and compare saves, engagement, freshness, titles, descriptions, and sources.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">▥</div><span class="badge">Measure</span></div><div class="mini-ui"><svg viewBox="0 0 100 45" width="100%" height="82"><polyline fill="none" stroke="#e53935" stroke-width="3" points="0,39 12,30 24,34 36,20 48,25 60,11 72,16 84,8 100,12"/></svg></div><h3>Pin Stats</h3><p>Inspect public engagement signals and understand why some pins keep winning while others stall.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">◎</div><span class="badge">Creators</span></div><div class="mini-ui"><div class="mini-line" style="width:88%"></div><div class="mini-line" style="width:70%"></div><div class="mini-line" style="width:76%"></div></div><h3>Account Explorer</h3><p>Discover influential creator accounts, analyze niche authority, and see who repeatedly surfaces around your topics.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">▦</div><span class="badge">Boards</span></div><div class="mini-ui"><div class="mini-line red" style="width:72%"></div><div class="mini-line" style="width:82%"></div><div class="mini-line" style="width:64%"></div></div><h3>Board Explorer</h3><p>Find high-performing boards, compare activity and followers, and identify where your content belongs.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">↗</div><span class="badge">Track</span></div><div class="mini-ui"><div class="mini-line" style="width:94%"></div><div class="mini-line red" style="width:54%"></div><div class="mini-line" style="width:78%"></div></div><h3>Rank Tracker</h3><p>Track keyword positions, movement, and new gains so you know what is improving and what needs attention.</p></article>
+      <article class="feature"><div class="feature-top"><div class="feature-icon">⌁</div><span class="badge">Momentum</span></div><div class="mini-ui"><svg viewBox="0 0 100 45" width="100%" height="82"><polyline fill="none" stroke="#2e9d59" stroke-width="3" points="0,40 10,36 20,32 30,35 40,24 50,26 60,19 70,13 80,16 90,8 100,5"/></svg></div><h3>Trends</h3><p>Spot momentum early and separate fresh opportunity from stale search behavior before you invest in content.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Three steps</div>
+      <h2>From seed keyword to content decision in minutes.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Enter a seed keyword</h3><p>Start with the topic, niche, product, recipe, style, or content category you want to own.</p><div class="mini-ui"><div class="mini-line red" style="width:82%"></div><div class="mini-line" style="width:48%"></div></div></div>
+      <div class="step"><div class="num">2</div><h3>See what Pinterest is proving</h3><p>Analyze related keywords, Top Pins, ideas, boards, accounts, freshness, engagement, and competition.</p><div class="mini-ui"><div class="mini-line" style="width:90%"></div><div class="mini-line" style="width:74%"></div><div class="mini-line red" style="width:60%"></div></div></div>
+      <div class="step"><div class="num">3</div><h3>Build the content plan</h3><p>Save winning opportunities, export research, create lists, and prioritize the topics most likely to move.</p><div class="mini-ui"><div class="mini-line" style="width:68%"></div><div class="mini-line" style="width:78%"></div><div class="mini-line" style="width:58%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Built for scale</div>
+      <h2>Less manual research. More confident publishing.</h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><b>20M+</b><span>keywords and variants analyzed</span></div>
+      <div class="stat"><b>100M+</b><span>pin and niche signals processed</span></div>
+      <div class="stat"><b>50K+</b><span>research reports generated</span></div>
+      <div class="stat"><b>4.3×</b><span>faster niche research workflow</span></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-copy"><span class="tag">A</span><h3>Expand beyond obvious keywords.</h3><p>PinitGrow runs your seed through A–Z and 0–9 autocomplete expansion so you can uncover long-tail queries, subtopics, intent variations, and hidden content clusters instead of stopping at the first ten ideas.</p></div>
+      <div class="product-card"><div class="product-bar"><strong>A–Z Keyword Expansion</strong><span class="badge">322 results</span></div><div class="ui-table"><div class="ui-head"><span>Keyword</span><span>Demand</span><span>Intent</span><span>Score</span></div><div class="ui-r"><span>easy dinner ideas</span><span>9.1K</span><span>Ideas</span><span class="pos">86</span></div><div class="ui-r"><span>easy dinner meal prep</span><span>7.4K</span><span>How-to</span><span class="pos">81</span></div><div class="ui-r"><span>easy dinner recipes family</span><span>6.2K</span><span>General</span><span class="pos">76</span></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-copy"><span class="tag">B</span><h3>See what top-ranking pins are doing right.</h3><p>Break down the pins Pinterest is already rewarding. Compare saves, engagement, freshness, title structure, description depth, source domains, and related ideas so your next creative starts with evidence.</p></div>
+      <div class="product-card"><div class="product-bar"><strong>Top Pins</strong><span class="badge">Live ranking view</span></div><div class="ui-table"><div class="ui-head"><span>Pin</span><span>Saves</span><span>Eng.</span><span>Fresh</span></div><div class="ui-r"><span>High Protein Vegan Bowls</span><span>24.5K</span><span>4.1%</span><span>1d</span></div><div class="ui-r"><span>30 Minute Dinner Ideas</span><span>18.2K</span><span>3.2%</span><span>3d</span></div><div class="ui-r"><span>Healthy Lunch Ideas</span><span>16.8K</span><span>3.0%</span><span>2d</span></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-copy"><span class="tag">C</span><h3>Find the boards and accounts shaping your niche.</h3><p>Know who already owns attention. PinitGrow surfaces leading boards and creators so you can study their content patterns, target collaboration opportunities, and understand where your niche is concentrated.</p></div>
+      <div class="product-card"><div class="product-bar"><strong>Board & Account Explorer</strong><span class="badge">Authority map</span></div><div class="ui-table"><div class="ui-head"><span>Entity</span><span>Followers</span><span>Fresh Pins</span><span>Score</span></div><div class="ui-r"><span>Easy Dinners</span><span>128K</span><span>High</span><span class="pos">91</span></div><div class="ui-r"><span>@fitfoodie</span><span>856K</span><span>High</span><span class="pos">88</span></div><div class="ui-r"><span>Meal Prep Ideas</span><span>96K</span><span>Med</span><span class="pos">84</span></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-copy"><span class="tag">D</span><h3>Track movement, not snapshots.</h3><p>Ranking research becomes useful when you know what is changing. Watch keyword positions, movement, freshness, and topic momentum so you can react before your competitors do.</p></div>
+      <div class="product-card"><div class="product-bar"><strong>Rank Tracker</strong><span class="badge">This week +123</span></div><svg viewBox="0 0 100 36" width="100%" height="170"><polyline fill="none" stroke="#e53935" stroke-width="2.5" points="0,30 10,27 20,29 30,20 40,22 50,15 60,17 70,10 80,13 90,6 100,8"/></svg></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-copy"><span class="tag">E</span><h3>Turn research into a repeatable system.</h3><p>Organize research into projects and saved lists, export clean data, and generate research briefs so your strategy survives beyond one browser session or one team member.</p></div>
+      <div class="product-card"><div class="product-bar"><strong>Research Projects</strong><span class="badge">Saved workflow</span></div><div class="ui-table"><div class="ui-head"><span>Project</span><span>Keywords</span><span>Pins</span><span>Status</span></div><div class="ui-r"><span>Q4 Food Content Plan</span><span>132</span><span>64</span><span class="pos">Ready</span></div><div class="ui-r"><span>Christmas Desserts</span><span>88</span><span>41</span><span class="pos">Active</span></div><div class="ui-r"><span>Healthy Meal Prep</span><span>74</span><span>33</span><span class="pos">Active</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Social proof</div>
+      <h2>Built for people who need Pinterest traffic to compound.</h2>
+    </div>
+    <div class="testimonials">
+      <div class="quote"><div class="stars">★★★★★</div><p>“PinitGrow cut my research time in half. I finally know which keywords deserve a post before I spend hours creating it.”</p><div class="person"><div class="avatar"></div><div><strong>Sarah Johnson</strong><small>Food Publisher</small></div></div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>“The Top Pins and Trends views are the first thing I check now. My Pinterest calendar is built from actual ranking evidence.”</p><div class="person"><div class="avatar"></div><div><strong>Emily Carter</strong><small>Pinterest Strategist</small></div></div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>“Board Explorer exposed traffic sources we were completely ignoring. It changed how we structure every client campaign.”</p><div class="person"><div class="avatar"></div><div><strong>Ryan Patel</strong><small>Agency Marketer</small></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="pricing-top">
+      <div class="section-head" style="margin:0"><div class="kicker">Pricing</div><h2>Start small. Scale when the data pays for itself.</h2></div>
+      <div class="toggle"><span class="active">Monthly</span><span>Annual · Save 20%</span></div>
+    </div>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Starter</h3><div class="price">$29 <span>/ month</span></div><p style="color:#7b756e">For solo bloggers and niche site owners.</p>
+        <ul><li>1 seat</li><li>100 searches / day</li><li>Keyword Explorer</li><li>Ideas + Top Pins</li><li>Pin Stats</li><li>Saved Lists</li><li>Email support</li></ul>
+        <a class="btn btn-secondary" href="#">Start Free Trial</a>
+      </div>
+      <div class="plan popular">
+        <div class="ribbon">MOST POPULAR</div><h3>Growth</h3><div class="price">$59 <span>/ month</span></div><p style="color:#7b756e">For creators and teams building traffic seriously.</p>
+        <ul><li>3 seats</li><li>500 searches / day</li><li>Everything in Starter</li><li>Account Explorer</li><li>Board Explorer</li><li>Rank Tracker</li><li>Trends</li><li>CSV exports</li></ul>
+        <a class="btn btn-primary" href="#">Start Free Trial</a>
+      </div>
+      <div class="plan">
+        <h3>Studio</h3><div class="price">$119 <span>/ month</span></div><p style="color:#7b756e">For agencies, publishers and power users.</p>
+        <ul><li>10 seats</li><li>2,000 searches / day</li><li>Everything in Growth</li><li>Research Projects</li><li>Advanced exports</li><li>White-label briefs</li><li>API access</li><li>Priority support</li></ul>
+        <a class="btn btn-secondary" href="#">Start Free Trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="container">
+    <div class="section-head"><div class="kicker">FAQ</div><h2>Questions before you start?</h2></div>
+    <div class="faq">
+      <div class="faq-item"><strong>Is there a free trial?<span>+</span></strong><p>Yes. Every plan starts with a 5-day trial so you can test the workflow before paying.</p></div>
+      <div class="faq-item"><strong>Do I need a Pinterest account connected?<span>+</span></strong><p>No for core research. Account connection is only needed for features that depend on your own tracked data.</p></div>
+      <div class="faq-item"><strong>Can I export the research?<span>+</span></strong><p>Yes. Growth and Studio include exports for turning research into content plans, reports, and client workflows.</p></div>
+      <div class="faq-item"><strong>Can I cancel anytime?<span>+</span></strong><p>Yes. There is no long-term lock-in on monthly plans.</p></div>
+      <div class="faq-item"><strong>Is this only for bloggers?<span>+</span></strong><p>No. PinitGrow works for creators, Etsy sellers, affiliate marketers, publishers, agencies, and brand teams.</p></div>
+      <div class="faq-item"><strong>Does the product keep getting updated?<span>+</span></strong><p>Yes. New research modules and data improvements are added as the platform evolves.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <h2>Research Pinterest like you intend to win.</h2>
+  <p>Find better keywords. Understand what ranks. Track what moves. Build content around evidence instead of intuition.</p>
+  <a class="btn" href="#pricing">Start Your 5-Day Free Trial →</a>
+</section>
+</main>
+
+<footer id="resources">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="brand"><span class="brand-mark"></span><span>PinitGrow</span></div><p class="footer-copy">Pinterest research intelligence for creators, publishers, niche site owners, marketers and agencies.</p></div>
+      <div><h4>Product</h4><a href="#">Keyword Explorer</a><a href="#">Top Pins</a><a href="#">Pin Stats</a><a href="#">Rank Tracker</a></div>
+      <div><h4>Explore</h4><a href="#">Ideas</a><a href="#">Account Explorer</a><a href="#">Board Explorer</a><a href="#">Trends</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#">Contact</a><a href="#">Pricing</a><a href="#">Affiliate Program</a></div>
+      <div><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Refund Policy</a><a href="#">Support</a></div>
+    </div>
+    <div class="bottom"><span>© 2026 PinitGrow. All rights reserved.</span><span>Pinterest research toolkit · support@pinitgrow.com</span></div>
+  </div>
+</footer>
+</body>
+</html>
