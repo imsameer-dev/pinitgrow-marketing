@@ -14,8 +14,8 @@ describe("appUrl", () => {
     expect(appUrl("login")).toBe("https://app.pinitgrow.com/login");
   });
 
-  it("throws when NEXT_PUBLIC_APP_URL is missing", () => {
+  it("falls back to the public app host when NEXT_PUBLIC_APP_URL is missing", () => {
     delete process.env.NEXT_PUBLIC_APP_URL;
-    expect(() => appUrl("/register")).toThrow(/NEXT_PUBLIC_APP_URL/);
+    expect(appUrl("/register")).toBe("https://app.pinitgrow.com/register");
   });
 });
