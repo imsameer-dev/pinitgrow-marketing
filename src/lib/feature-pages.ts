@@ -227,7 +227,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Search", "Switch grid or table", "Load more in batches of 25", "Export CSV", "Refresh live"],
     related: ["keyword-explorer", "pin-stats", "board-explorer", "projects"],
-    planRowLabels: ["Top Pins searches", "Maximum pins/search"],
+    planRowLabels: ["Top Pins credits", "Maximum pins/search"],
   },
   {
     slug: "pin-stats",
@@ -266,7 +266,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Get stats"],
     related: ["top-pins", "account-explorer", "lists"],
-    planRowLabels: ["Pin Stats scans"],
+    planRowLabels: ["Pin Stats pins"],
   },
   {
     slug: "account-explorer",
@@ -420,7 +420,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Track keyword", "Snapshot now", "Open history", "Remove tracker", "Schedule & email"],
     related: ["search-tracker", "top-pins", "trends"],
-    planRowLabels: ["Rank Tracker", "Active trackers", "Tracker history"],
+    planRowLabels: ["Manual rank checks", "Active trackers", "Tracker history"],
   },
   {
     slug: "search-tracker",
@@ -470,7 +470,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Track search", "Snapshot now", "Compare snapshot dates", "Remove tracker"],
     related: ["rank-tracker", "top-pins", "trends"],
-    planRowLabels: ["Search Tracker", "Active trackers", "Tracker history"],
+    planRowLabels: ["Manual search checks", "Active trackers", "Tracker history"],
   },
   {
     slug: "trends",
@@ -592,7 +592,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Create project", "Open workspace", "Add notes", "Delete project"],
     related: ["keyword-explorer", "top-pins", "ideas", "lists"],
-    planRowLabels: ["New research projects", "Stored projects"],
+    planRowLabels: ["Project collections", "Stored projects"],
   },
   {
     slug: "lists",
@@ -658,8 +658,8 @@ export function planLimitsForFeature(slug: string) {
   const page = getFeaturePage(slug);
   if (!page) return [];
 
-  const creator = plans.find((plan) => plan.code === "creator");
-  const professional = plans.find((plan) => plan.code === "professional");
+  const creator = plans.find((plan) => plan.code === "basic");
+  const professional = plans.find((plan) => plan.code === "pro");
   const studio = plans.find((plan) => plan.code === "studio");
 
   return page.planRowLabels.map((label) => ({

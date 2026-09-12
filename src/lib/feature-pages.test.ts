@@ -92,13 +92,13 @@ describe("featurePages", () => {
     expect(rows).toEqual([
       {
         label: "Keyword Explorer",
-        creator: "20/day",
-        professional: "40/day",
-        studio: "100/day",
+        creator: "600/month",
+        professional: "1,800/month",
+        studio: "6,000/month",
       },
     ]);
     expect(plans[0]?.rows.find((row) => row.label === "Keyword Explorer")?.value).toBe(
-      "20/day",
+      "600/month",
     );
   });
 });
