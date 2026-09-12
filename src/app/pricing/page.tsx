@@ -7,7 +7,7 @@ import { plans, trialDays } from "@/lib/plans";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: `PinitGrow monthly plans from $9.99. ${trialDays}-day free trial, no credit card.`,
+  description: `PinitGrow monthly plans from $10. ${trialDays}-day free trial, no credit card.`,
 };
 
 export default function PricingPage() {

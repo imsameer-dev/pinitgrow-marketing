@@ -45,7 +45,7 @@ const jsonLd = {
   description: site.description,
   offers: {
     "@type": "Offer",
-    price: "9.99",
+    price: "10",
     priceCurrency: "USD",
   },
 };

@@ -5,7 +5,7 @@ test("home explains the product and hands off signup to the app", async ({ page 
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Pinterest data");
   await expect(page.getByRole("heading", { name: /Everything you need/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Basic", exact: true })).toBeVisible();
-  await expect(page.getByText("$9.99").first()).toBeVisible();
+  await expect(page.getByText("$10").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /Start Free Trial/ }).first()).toHaveAttribute("href", "https://app.pinitgrow.com/register");
   await expect(page.getByRole("link", { name: "Log in" }).first()).toHaveAttribute("href", "https://app.pinitgrow.com/login");
   await expect(page.locator(".directory-links a")).toHaveCount(11);

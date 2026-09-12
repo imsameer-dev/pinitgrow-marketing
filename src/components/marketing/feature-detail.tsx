@@ -142,7 +142,7 @@ export function FeatureDetail({ page }: { page: FeaturePage }) {
             lead={
               limits.length
                 ? "Limits match the live app catalog."
-                : "This tool is included on every plan and does not have a separate monthly quota."
+                : "This tool is included on every plan and does not have a separate daily quota."
             }
           />
           {limits.length ? (

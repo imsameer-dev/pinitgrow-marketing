@@ -6,17 +6,17 @@ describe("pricing catalog", () => {
   it("advertises the requested monthly prices", () => {
     expect(trialDays).toBe(3);
     expect(plans.map((p) => [p.code, p.name, p.priceLabel])).toEqual([
-      ["basic", "Basic", "$9.99"], ["pro", "Pro", "$25"], ["studio", "Studio", "$80"],
+      ["basic", "Basic", "$10"], ["pro", "Pro", "$25"], ["studio", "Studio", "$80"],
     ]);
     expect(plans.find((p) => p.featured)?.code).toBe("pro");
   });
 
-  it("provides 3x and 10x monthly credits without multiplying every batch size", () => {
+  it("provides 3x and 10x daily credits without multiplying every batch size", () => {
     const value = (index: number, label: string) => plans[index].rows.find((r) => r.label === label)?.value;
-    for (const row of plans[0].rows.filter((r) => r.value.endsWith("/month"))) {
-      const baseline = Number(row.value.replaceAll(",", "").replace("/month", ""));
-      expect(value(1, row.label)).toBe(`${(baseline * 3).toLocaleString("en-US")}/month`);
-      expect(value(2, row.label)).toBe(`${(baseline * 10).toLocaleString("en-US")}/month`);
+    for (const row of plans[0].rows.filter((r) => r.value.endsWith("/day"))) {
+      const baseline = Number(row.value.replaceAll(",", "").replace("/day", ""));
+      expect(value(1, row.label)).toBe(`${(baseline * 3).toLocaleString("en-US")}/day`);
+      expect(value(2, row.label)).toBe(`${(baseline * 10).toLocaleString("en-US")}/day`);
     }
     expect(plans.map((_, i) => value(i, "Maximum pins/search"))).toEqual(["100", "300", "500"]);
     expect(plans.map((_, i) => value(i, "Active trackers"))).toEqual(["5", "15", "50"]);
