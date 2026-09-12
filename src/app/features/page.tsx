@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { CtaBanner } from "@/components/marketing/cta-banner";
+import { Decision } from "@/components/marketing/decision";
 import { ProductShot } from "@/components/marketing/product-shot";
 import { Container, Section, SectionHeading } from "@/components/marketing/section";
+import { featurePath } from "@/lib/feature-pages";
 import { features } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,44 +17,45 @@ export const metadata: Metadata = {
 export default function FeaturesPage() {
   return (
     <main>
-      <Section>
+      <Section className="py-16 md:py-20">
         <Container>
-          <SectionHeading
+          <SectionHeading as="h1"
             kicker="Product"
-            title="Every tool answers a publishing decision."
+            title={
+              <>
+                Every tool answers a{" "}
+                <span>publishing decision.</span>
+              </>
+            }
             lead="Start from a seed keyword, reverse-engineer the pins that already rank, and track movement so your next piece of content is based on evidence."
           />
-          <div className="space-y-20">
-            {features.map((feature, index) => (
+          <div className="grid gap-5 md:gap-6 lg:grid-cols-2">
+            {features.map((feature) => (
               <article
                 key={feature.id}
                 id={feature.id}
-                className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2"
+                className="surface-card flex h-full flex-col overflow-hidden scroll-mt-28"
               >
-                <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
-                  <p className="text-xs font-black tracking-[0.12em] text-primary uppercase">
+                <ProductShot name={feature.shot} className="screenshot-frame-flush" />
+                <div className="flex flex-1 flex-col p-5 md:p-6">
+                  <p className="text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">
                     {feature.badge}
                   </p>
-                  <h3 className="mt-2 text-3xl font-semibold tracking-tight">
+                  <h3 className="mt-2 text-[1.35rem] leading-snug font-semibold tracking-tight md:text-[1.5rem]">
                     {feature.title}
                   </h3>
-                  <p className="mt-3 text-base text-muted-foreground">{feature.body}</p>
-                  <dl className="mt-6 grid gap-3 text-sm">
-                    <div>
-                      <dt className="font-semibold">You start with</dt>
-                      <dd className="text-muted-foreground">{feature.input}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold">You get</dt>
-                      <dd className="text-muted-foreground">{feature.output}</dd>
-                    </div>
-                  </dl>
+                  <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
+                    {feature.body}
+                  </p>
+                  <Decision question={feature.decision} className="mt-5" />
+                  <Link
+                    href={featurePath(feature.id)}
+                    className="group mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-foreground transition-colors duration-[var(--duration-normal)] hover:text-primary"
+                  >
+                    See complete details
+                    <ArrowRight className="size-4 transition-transform duration-[var(--duration-normal)] group-hover:translate-x-0.5" />
+                  </Link>
                 </div>
-                <ProductShot
-                  name={feature.shot}
-                  title={feature.title}
-                  className={index % 2 === 1 ? "lg:order-1" : undefined}
-                />
               </article>
             ))}
           </div>

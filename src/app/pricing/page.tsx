@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CtaBanner } from "@/components/marketing/cta-banner";
+import { DataTable } from "@/components/marketing/data-table";
 import { PricingSection } from "@/components/marketing/pricing-section";
 import { Container, Section, SectionHeading } from "@/components/marketing/section";
 import { plans, trialDays } from "@/lib/plans";
@@ -14,46 +15,46 @@ export default function PricingPage() {
 
   return (
     <main>
-      <Section className="pb-0">
+      <Section className="py-12 pb-0 md:py-16 md:pb-0">
         <Container>
-          <SectionHeading
+          <SectionHeading as="h1"
             kicker="Pricing"
-            title="Start small. Scale when the data pays for itself."
-            lead={`Every new account includes a ${trialDays}-day trial. Plans match the live app: Creator $9.99, Professional $29.99, Studio $85.99.`}
+            title="The right capacity for your next chapter."
+            lead={`Explore PinitGrow with a ${trialDays}-day free trial. Then choose the plan that fits your research, from your first niche to your full client roster.`}
             className="mb-0"
           />
         </Container>
       </Section>
       <PricingSection showHeading={false} />
-      <Section soft className="pt-16">
+      <Section id="compare" soft className="py-16">
         <Container>
           <SectionHeading kicker="Compare" title="What each plan includes." />
-          <div className="overflow-x-auto rounded-2xl border border-border bg-card">
-            <table className="w-full min-w-[720px] text-left text-sm">
-              <thead className="bg-muted text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Capability</th>
+          <DataTable caption="Plan comparison">
+            <thead>
+              <tr>
+                <th scope="col">Capability</th>
+                {plans.map((plan) => (
+                  <th key={plan.code} scope="col">
+                    {plan.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, rowIndex) => (
+                <tr key={row.label}>
+                  <th scope="row" className="font-medium text-foreground">
+                    {row.label}
+                  </th>
                   {plans.map((plan) => (
-                    <th key={plan.code} className="px-4 py-3 font-semibold">
-                      {plan.name}
-                    </th>
+                    <td key={plan.code} className="text-muted-foreground">
+                      {plan.rows[rowIndex]?.value}
+                    </td>
                   ))}
                 </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, rowIndex) => (
-                  <tr key={row.label} className="border-t border-border">
-                    <th className="px-4 py-3 font-medium">{row.label}</th>
-                    {plans.map((plan) => (
-                      <td key={plan.code} className="px-4 py-3 text-muted-foreground">
-                        {plan.rows[rowIndex]?.value}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </DataTable>
         </Container>
       </Section>
       <CtaBanner />

@@ -13,12 +13,12 @@ export default function AffiliatePage() {
     <main>
       <Section>
         <Container className="max-w-3xl">
-          <SectionHeading
+          <SectionHeading as="h1"
             kicker="Partners"
             title="Refer Pinterest operators who need a real research stack."
             lead="If you teach Pinterest, run an agency, or publish for creators, you can refer PinitGrow. Program details are handled over email while we finish the partner portal."
           />
-          <div className="rounded-2xl border border-border bg-card p-6">
+          <div className="surface-card p-6">
             <p className="text-sm text-muted-foreground">
               Send your audience, site, and expected volume to {site.email} with the
               subject “Affiliate”. We’ll reply with commission terms if it’s a fit.

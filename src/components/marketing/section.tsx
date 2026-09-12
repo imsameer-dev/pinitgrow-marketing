@@ -34,7 +34,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "py-24",
+        "py-16 md:py-24",
         soft && "border-y border-[#eee8e2] bg-surface-subtle",
         className,
       )}
@@ -49,22 +49,24 @@ export function SectionHeading({
   title,
   lead,
   className,
+  as: Heading = "h2",
 }: {
   kicker: string;
-  title: string;
+  title: React.ReactNode;
   lead?: string;
   className?: string;
+  as?: "h1" | "h2";
 }) {
   return (
     <div className={cn("mb-10 max-w-3xl", className)}>
       <p className="text-xs font-black tracking-[0.12em] text-primary uppercase">
         {kicker}
       </p>
-      <h2 className="mt-2.5 text-4xl font-semibold tracking-tight md:text-5xl">
+      <Heading className="mt-3 text-3xl leading-[1.12] font-semibold tracking-[-0.04em] md:text-5xl">
         {title}
-      </h2>
+      </Heading>
       {lead ? (
-        <p className="lead mt-4 max-w-3xl text-lg text-muted-foreground">
+        <p className="lead mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
           {lead}
         </p>
       ) : null}

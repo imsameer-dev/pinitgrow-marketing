@@ -17,17 +17,18 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <main>
-      <Section>
-        <Container className="max-w-3xl">
-          <SectionHeading
+      <Section className="py-12 md:py-16">
+        <Container className="max-w-[760px]">
+          <SectionHeading as="h1"
             kicker="FAQ"
             title="Questions before you start?"
-            lead="The marketing site is the front door. Research, billing, and login all happen in the app."
+            lead="Get to know the research tools, trial, and plans before you get started."
+            className="mb-8"
           />
-          <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card px-5">
+          <Accordion type="single" collapsible className="rounded-[16px] border border-border bg-card px-4 shadow-xs sm:px-5">
             {faqs.map((item) => (
               <AccordionItem key={item.q} value={item.q}>
-                <AccordionTrigger className="text-base">{item.q}</AccordionTrigger>
+                <AccordionTrigger>{item.q}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">{item.a}</AccordionContent>
               </AccordionItem>
             ))}

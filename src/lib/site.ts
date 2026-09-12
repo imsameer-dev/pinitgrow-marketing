@@ -10,28 +10,27 @@ export const site = {
 } as const;
 
 export const nav = [
-  { href: "/#features", label: "Product" },
-  { href: "/features", label: "Features" },
+  { href: "/features", label: "Product" },
   { href: "/pricing", label: "Pricing" },
   { href: "/#usecases", label: "Use Cases" },
-  { href: "/faq", label: "Resources" },
+  { href: "/faq", label: "FAQ" },
 ] as const;
 
 export const footerNav = {
   product: [
-    { href: "/features#keyword-explorer", label: "Keyword Explorer" },
-    { href: "/features#top-pins", label: "Top Pins" },
-    { href: "/features#pin-stats", label: "Pin Stats" },
-    { href: "/features#rank-tracker", label: "Rank Tracker" },
-    { href: "/features#search-tracker", label: "Search Tracker" },
+    { href: "/features/keyword-explorer", label: "Keyword Explorer" },
+    { href: "/features/top-pins", label: "Top Pins" },
+    { href: "/features/pin-stats", label: "Pin Stats" },
+    { href: "/features/rank-tracker", label: "Rank Tracker" },
+    { href: "/features/search-tracker", label: "Search Tracker" },
   ],
   explore: [
-    { href: "/features#ideas", label: "Ideas" },
-    { href: "/features#account-explorer", label: "Account Explorer" },
-    { href: "/features#board-explorer", label: "Board Explorer" },
-    { href: "/features#trends", label: "Trends" },
-    { href: "/features#projects", label: "Research Projects" },
-    { href: "/features#lists", label: "Saved Lists" },
+    { href: "/features/ideas", label: "Ideas" },
+    { href: "/features/account-explorer", label: "Account Explorer" },
+    { href: "/features/board-explorer", label: "Board Explorer" },
+    { href: "/features/trends", label: "Trends" },
+    { href: "/features/projects", label: "Research Projects" },
+    { href: "/features/lists", label: "Saved Lists" },
   ],
   company: [
     { href: "/about", label: "About" },
@@ -97,7 +96,7 @@ export const features = [
     decision: "How do I keep a full niche brief for my team?",
     input: "A project name and seed keyword after you have run Keyword Explorer and Top Pins.",
     output: "A saved research package with opportunity scoring, pins, keywords, and ideas.",
-    shot: "placeholder" as const,
+    shot: "projects" as const,
     shotUrl: "app.pinitgrow.com/app/projects",
   },
   {
@@ -111,7 +110,7 @@ export const features = [
     input: 'A seed such as "home decor" or "easy weeknight dinners".',
     output:
       "A–Z / 0–9 suggestions with intent, popularity, and demand when volume is live.",
-    shot: "keywords" as const,
+    shot: "keyword-explorer" as const,
     shotUrl: "app.pinitgrow.com/app/keywords",
     barWidths: ["86%", "69%", "78%", "54%", "63%"],
   },
@@ -152,7 +151,7 @@ export const features = [
     decision: "Which Pin patterns are worth repeating?",
     input: "One or many pin URLs.",
     output: "Bulk stats, annotations, and destination data.",
-    shot: "placeholder" as const,
+    shot: "pin-stats" as const,
     shotUrl: "app.pinitgrow.com/app/pin-stats",
   },
   {
@@ -165,7 +164,7 @@ export const features = [
     decision: "Which accounts should I study for growth patterns?",
     input: "A username or profile keyword.",
     output: "The pins and topics a competitor account actually uses.",
-    shot: "placeholder" as const,
+    shot: "account-explorer" as const,
     shotUrl: "app.pinitgrow.com/app/account-explorer",
   },
   {
@@ -178,7 +177,7 @@ export const features = [
     decision: "Which boards are the strongest topical match?",
     input: "A board URL or name.",
     output: "Board-level pins and interests.",
-    shot: "placeholder" as const,
+    shot: "board-explorer" as const,
     shotUrl: "app.pinitgrow.com/app/board-explorer",
   },
   {
@@ -191,7 +190,7 @@ export const features = [
     decision: "Are my SEO and Pin changes actually working?",
     input: "A keyword plus your domain.",
     output: "Scheduled position checks over time.",
-    shot: "placeholder" as const,
+    shot: "rank-tracker" as const,
     shotUrl: "app.pinitgrow.com/app/rank-tracker",
   },
   {
@@ -204,7 +203,7 @@ export const features = [
     decision: "How is this search results page changing over time?",
     input: "A keyword to track on a schedule.",
     output: "SERP snapshots with pin counts you can compare over time.",
-    shot: "placeholder" as const,
+    shot: "search-tracker" as const,
     shotUrl: "app.pinitgrow.com/app/search-tracker",
   },
   {
@@ -230,7 +229,7 @@ export const features = [
     decision: "Which keywords and pins should I brief next?",
     input: "Any keyword or pin you save from an explorer.",
     output: "Named keyword and pin lists you can reopen anytime.",
-    shot: "placeholder" as const,
+    shot: "lists" as const,
     shotUrl: "app.pinitgrow.com/app/lists",
     barWidths: ["88%", "72%", "64%", "51%"],
   },
@@ -238,17 +237,17 @@ export const features = [
 
 export const steps = [
   {
-    num: "1",
+    num: "01",
     title: "Enter a seed keyword",
     body: "Start with the topic, niche, product, recipe, style, or content category you want to own.",
   },
   {
-    num: "2",
+    num: "02",
     title: "See what Pinterest is proving",
     body: "Analyze related keywords, Top Pins, ideas, boards, accounts, freshness, engagement, and competition.",
   },
   {
-    num: "3",
+    num: "03",
     title: "Build the content plan",
     body: "Save winning opportunities, export research, create lists, and prioritize the topics most likely to move.",
   },
@@ -284,7 +283,7 @@ export const deepDives = [
     tag: "C",
     title: "Find the boards and accounts shaping your niche.",
     body: "Know who already owns attention. PinitGrow surfaces leading boards and creators so you can study their content patterns, target collaboration opportunities, and understand where your niche is concentrated.",
-    shot: "placeholder" as const,
+    shot: "board-explorer" as const,
     shotUrl: "app.pinitgrow.com/app/board-explorer",
     caption: "Board & Account Explorer",
     badge: "Authority map",
@@ -302,7 +301,7 @@ export const deepDives = [
     tag: "E",
     title: "Turn research into a repeatable system.",
     body: "Organize research into projects and saved lists, export clean data, and generate research briefs so your strategy survives beyond one browser session or one team member.",
-    shot: "ideas" as const,
+    shot: "projects" as const,
     shotUrl: "app.pinitgrow.com/app/projects",
     caption: "Ideas & Research Projects",
     badge: "Saved workflow",

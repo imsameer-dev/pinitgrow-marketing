@@ -17,27 +17,24 @@ export function ProblemSection() {
           title="Pinterest research is scattered. Your decisions shouldn’t be."
           lead="Most marketers jump between Pinterest search, spreadsheets, trend tools, random boards, and manual pin checking. PinitGrow turns that mess into one decision system."
         />
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {problems.map((item, index) => {
             const Icon = icons[item.kind][index < 2 ? 0 : 1];
             return (
-              <div
-                key={item.title}
-                className="flex items-start gap-4 rounded-[20px] border border-border bg-card p-6"
-              >
+              <div key={item.title} className="surface-card flex items-start gap-4 p-6">
                 <div
                   className={cn(
-                    "grid size-[42px] shrink-0 place-items-center rounded-xl",
+                    "grid size-10 shrink-0 place-items-center rounded-[10px]",
                     item.kind === "problem"
                       ? "bg-[#fff0ef] text-primary"
                       : "bg-success-soft text-success",
                   )}
                 >
-                  <Icon className="size-5" />
+                  <Icon className="size-5" aria-hidden />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <p className="mt-1.5 text-sm text-muted-foreground">{item.body}</p>
+                  <h3 className="text-lg leading-snug font-semibold">{item.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
                 </div>
               </div>
             );

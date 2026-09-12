@@ -10,3 +10,4 @@ playwright-report/
 .superpowers/
 *.tsbuildinfo
 e2e/*.png
+.design-review/

@@ -14,13 +14,13 @@ export default function ContactPage() {
     <main>
       <Section>
         <Container className="max-w-3xl">
-          <SectionHeading
+          <SectionHeading as="h1"
             kicker="Support"
             title="We’re here if research gets stuck."
             lead={`Email ${site.email} for billing, trial, or product questions. Account access lives in the app.`}
           />
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-card p-6">
+            <div className="surface-card p-6">
               <h3 className="font-semibold">Email</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Typical replies during weekday business hours.
@@ -32,7 +32,7 @@ export default function ContactPage() {
                 {site.email}
               </a>
             </div>
-            <div className="rounded-2xl border border-border bg-card p-6">
+            <div className="surface-card p-6">
               <h3 className="font-semibold">Workspace</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Log in or start a trial on {site.appHost}.

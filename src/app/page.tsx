@@ -5,9 +5,6 @@ import { FeatureGrid } from "@/components/marketing/feature-grid";
 import { Hero } from "@/components/marketing/hero";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { PricingSection } from "@/components/marketing/pricing-section";
-import { ProblemSection } from "@/components/marketing/problem-section";
-import { StatsAndDeepDives } from "@/components/marketing/stats-and-deep-dives";
-import { Testimonials } from "@/components/marketing/testimonials";
 import { TrustStrip } from "@/components/marketing/trust-strip";
 import { site } from "@/lib/site";
 
@@ -17,18 +14,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return (
-    <main>
-      <Hero />
-      <TrustStrip />
-      <ProblemSection />
-      <FeatureGrid />
-      <HowItWorks />
-      <StatsAndDeepDives />
-      <Testimonials />
-      <PricingSection />
-      <FaqPreview />
-      <CtaBanner />
-    </main>
-  );
+  return <main><Hero /><TrustStrip /><FeatureGrid /><HowItWorks /><PricingSection /><FaqPreview /><CtaBanner /></main>;
 }

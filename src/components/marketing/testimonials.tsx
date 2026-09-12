@@ -3,36 +3,36 @@ import { testimonials } from "@/lib/site";
 
 export function Testimonials() {
   return (
-    <Section soft>
+    <Section soft className="py-20 md:py-24">
       <Container>
         <SectionHeading
           kicker="Social proof"
           title="Built for people who need Pinterest traffic to compound."
         />
         <div className="grid gap-4 md:grid-cols-3">
-          {testimonials.map((item) => (
-            <blockquote
-              key={item.name}
-              className="rounded-[20px] border border-border bg-card p-[22px]"
-            >
-              <div className="tracking-[2px] text-[#f0aa2e]" aria-label="5 out of 5 stars">
-                ★★★★★
-              </div>
-              <p className="mt-3 min-h-[90px] text-[15px] text-[#4f4a45]">
-                “{item.quote}”
-              </p>
-              <div className="mt-4 flex items-center gap-2.5">
-                <div
-                  className="size-[38px] rounded-full bg-gradient-to-br from-[#d7b29f] to-[#6f5042]"
-                  aria-hidden
-                />
-                <div>
-                  <strong className="block text-sm">{item.name}</strong>
-                  <small className="text-[#8a847d]">{item.role}</small>
-                </div>
-              </div>
-            </blockquote>
-          ))}
+          {testimonials.map((item) => {
+            const initials = item.name
+              .split(" ")
+              .map((part) => part[0])
+              .join("");
+            return (
+              <blockquote key={item.name} className="surface-card flex h-full flex-col p-6">
+                <p className="text-[15px] leading-relaxed text-[#4f4a45]">“{item.quote}”</p>
+                <footer className="mt-5 flex items-center gap-3">
+                  <span
+                    className="grid size-9 place-items-center rounded-full bg-muted text-xs font-semibold text-muted-foreground"
+                    aria-hidden
+                  >
+                    {initials}
+                  </span>
+                  <div>
+                    <strong className="block text-sm font-semibold">{item.name}</strong>
+                    <span className="text-[13px] text-muted-foreground">{item.role}</span>
+                  </div>
+                </footer>
+              </blockquote>
+            );
+          })}
         </div>
       </Container>
     </Section>

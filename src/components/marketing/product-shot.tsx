@@ -1,44 +1,17 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import {
+  getProductShot,
+  productShots,
+  type ProductShotName,
+} from "@/lib/product-shots";
 
-export const productShots = {
-  keywords: {
-    src: "/product/keyword-explorer-live.png",
-    alt: "PinitGrow Keyword Explorer showing A–Z suggestions, intent, and popularity scores",
-    width: 1600,
-    height: 1000,
-  },
-  "keywords-light": {
-    src: "/product/keywords-light.png",
-    alt: "Keyword Explorer in light mode with 364 suggestions and popularity bars",
-    width: 1600,
-    height: 1000,
-  },
-  ideas: {
-    src: "/product/ideas-live.png",
-    alt: "Ideas tool listing Pinterest-native topics, search volume, and relevance",
-    width: 1600,
-    height: 1000,
-  },
-  "top-pins": {
-    src: "/product/top-pins-live.webp",
-    alt: "Top Pins results grid with ranking badges and match confidence",
-    width: 1600,
-    height: 1000,
-  },
-  trends: {
-    src: "/product/trends-live.png",
-    alt: "Trends workspace showing spotlight topics and save-based momentum",
-    width: 1600,
-    height: 1000,
-  },
-} as const;
-
-export type ProductShotName = keyof typeof productShots | "placeholder";
+export { productShots };
+export type { ProductShotName };
 
 export function ProductFrame({
   title = "Keyword Explorer",
-  caption = "PinitGrow Studio",
+  caption = "PinitGrow",
   className,
   children,
 }: {
@@ -50,13 +23,13 @@ export function ProductFrame({
   return (
     <figure
       className={cn(
-        "overflow-hidden rounded-[28px] bg-gradient-to-b from-[#171717] to-[#222] p-3.5 shadow-device",
+        "overflow-hidden rounded-[20px] bg-[#161616] p-2 shadow-device md:p-2.5",
         className,
       )}
     >
-      <div className="overflow-hidden rounded-[18px] border border-device-border bg-device">
-        <div className="flex h-[52px] items-center justify-between border-b border-[#2b2d30] px-[18px]">
-          <strong className="text-[13px] text-device-foreground">{title}</strong>
+      <div className="overflow-hidden rounded-[12px] border border-device-border bg-device">
+        <div className="flex h-10 items-center justify-between border-b border-[#2b2d30] px-4">
+          <strong className="text-[12px] font-medium text-device-foreground">{title}</strong>
           <span className="text-[11px] text-device-muted">{caption}</span>
         </div>
         {children}
@@ -69,55 +42,52 @@ export function ProductShot({
   name,
   title,
   badge,
-  priority = false,
+  preload = false,
+  sizes = "(min-width: 1024px) 540px, 100vw",
   className,
 }: {
   name: ProductShotName;
   title?: string;
   badge?: string;
-  priority?: boolean;
+  preload?: boolean;
+  sizes?: string;
   className?: string;
 }) {
-  const shot = name === "placeholder" ? null : productShots[name];
+  const shot = getProductShot(name);
 
   return (
-    <div
-      className={cn(
-        "rounded-3xl border border-border bg-card p-[18px] shadow-lg",
-        className,
-      )}
-    >
+    <figure className={cn("screenshot-frame", className)}>
       {title ? (
-        <div className="mb-3.5 flex items-center justify-between gap-3">
-          <strong className="text-[13px]">{title}</strong>
+        <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-3.5 py-2.5">
+          <strong className="text-[13px] font-medium">{title}</strong>
           {badge ? (
-            <span className="rounded-full bg-success-soft px-2 py-1 text-[10px] font-extrabold text-success">
+            <span className="rounded-md bg-success-soft px-2 py-0.5 text-[10px] font-semibold tracking-wide text-success uppercase">
               {badge}
             </span>
           ) : null}
         </div>
       ) : null}
       {shot ? (
-        <div className="overflow-hidden rounded-2xl border border-border bg-muted">
+        <div className="relative w-full" style={{ aspectRatio: `${shot.width} / ${shot.height}` }}>
           <Image
             src={shot.src}
             alt={shot.alt}
-            width={shot.width}
-            height={shot.height}
-            priority={priority}
-            className="h-auto w-full"
+            fill
+            preload={preload}
+            sizes={sizes}
+            className="object-cover object-left-top"
           />
         </div>
       ) : (
         <ImageSlot label={title ?? "Product screenshot"} />
       )}
-    </div>
+    </figure>
   );
 }
 
 export function ImageSlot({ label }: { label: string }) {
   return (
-    <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-border bg-muted px-6 py-16 text-center">
+    <div className="flex min-h-[220px] items-center justify-center bg-muted px-6 py-16 text-center">
       <div>
         <p className="text-sm font-semibold">{label}</p>
         <p className="mt-1 text-xs text-muted-foreground">

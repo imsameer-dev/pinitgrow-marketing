@@ -12,7 +12,7 @@ export default function AboutPage() {
     <main>
       <Section>
         <Container className="max-w-3xl">
-          <SectionHeading
+          <SectionHeading as="h1"
             kicker="Company"
             title="Research Pinterest like a system, not a guess."
             lead={`${site.name} helps creators, publishers, niche site owners, and agencies decide what to publish using public Pinterest demand, ranking, and creator signals.`}

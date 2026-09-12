@@ -24,13 +24,13 @@ export const metadata: Metadata = {
     url: site.url,
     siteName: site.name,
     type: "website",
-    images: [{ url: "/product/keyword-explorer-live.png" }],
+    images: [{ url: "/product/keyword-explorer.webp" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "PinitGrow — Pinterest Research Intelligence",
     description: site.description,
-    images: ["/product/keyword-explorer-live.png"],
+    images: ["/product/keyword-explorer.webp"],
   },
   icons: { icon: "/brand/pinitgrow-logo.svg" },
 };
@@ -53,13 +53,16 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen font-sans">
+      <body className="min-h-screen font-sans" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <a href="#content" className="skip-link">
+          Skip to content
+        </a>
         <SiteHeader />
-        {children}
+        <div id="content">{children}</div>
         <SiteFooter />
       </body>
     </html>

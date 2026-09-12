@@ -1,33 +1,11 @@
-import { Container, Section, SectionHeading } from "@/components/marketing/section";
-import { steps } from "@/lib/site";
+import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/marketing/section";
+import { AppLink } from "@/components/marketing/app-link";
 
 export function HowItWorks() {
-  return (
-    <Section soft>
-      <Container>
-        <SectionHeading
-          kicker="Three steps"
-          title="From seed keyword to content decision in minutes."
-        />
-        <div className="grid gap-4 md:grid-cols-3">
-          {steps.map((step) => (
-            <div
-              key={step.num}
-              className="rounded-[22px] border border-border bg-card p-6"
-            >
-              <div className="mb-4 grid size-9 place-items-center rounded-full bg-primary text-sm font-black text-primary-foreground">
-                {step.num}
-              </div>
-              <h3 className="text-[19px] font-semibold">{step.title}</h3>
-              <p className="mt-2 mb-4 text-sm text-muted-foreground">{step.body}</p>
-              <div className="rounded-[14px] border border-[#eee8e2] bg-[#fcfbfa] p-3">
-                <div className="my-1.5 h-2 w-4/5 rounded-full bg-[#f7c4c2]" />
-                <div className="my-1.5 h-2 w-1/2 rounded-full bg-[#e9e5e0]" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
+  return <section id="usecases" className="usecases-section"><Container><div className="usecases-heading"><div><p className="eyebrow">YOUR NICHE. YOUR NEXT CHAPTER.</p><h2>Built for the work<br />behind the growth.</h2></div><p>Whether you’re planning your next post or your next client campaign, start with a clearer picture of the opportunity.</p></div><div className="usecase-columns">{[
+    { num: "01", audience: "Creators & publishers", title: "Make your next post count.", body: "Find searchable topics and fresh angles for your editorial calendar. Spend less time collecting ideas and more time creating with a purpose." },
+    { num: "02", audience: "Ecommerce & brands", title: "Meet your next customer’s search.", body: "Understand how people discover products like yours. Explore relevant keywords, seasonal interest, and the visual content that gets attention." },
+    { num: "03", audience: "Agencies & strategists", title: "Bring evidence to every brief.", body: "Research client niches, study competitors, and organize findings into projects. Give every recommendation a clear starting point." },
+  ].map((item) => <article key={item.num}><span className="usecase-number">{item.num}</span><p className="usecase-audience">{item.audience}</p><h3>{item.title}</h3><p>{item.body}</p></article>)}</div><AppLink path="/register" className="text-link">Find your next opportunity <ArrowRight /></AppLink></Container></section>;
 }
