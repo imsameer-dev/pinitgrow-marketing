@@ -2,11 +2,12 @@ import { trialDays } from "@/lib/plans";
 
 export const site = {
   name: "PinitGrow",
+  title: "Pinterest Keyword Research & Competitor Analysis | PinitGrow",
   url: "https://pinitgrow.com",
   appHost: "app.pinitgrow.com",
   email: "support@pinitgrow.com",
   description:
-    "Find Pinterest keywords, top-ranking Pins, boards, accounts, trends, and ranking opportunities in one research platform.",
+    "Find Pinterest keywords, analyze top Pins and competitors, and track rankings with PinitGrow. Turn research into content ideas. Start a 3-day free trial.",
 } as const;
 
 export const nav = [

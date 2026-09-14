@@ -9,8 +9,9 @@ import { TrustStrip } from "@/components/marketing/trust-strip";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { absolute: "PinitGrow — Pinterest Research Intelligence" },
+  title: { absolute: site.title },
   description: site.description,
+  alternates: { canonical: "/" },
 };
 
 export default function HomePage() {

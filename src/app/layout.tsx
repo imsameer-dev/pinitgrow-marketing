@@ -14,12 +14,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "PinitGrow — Pinterest Research Intelligence",
+    default: site.title,
     template: "%s | PinitGrow",
   },
   description: site.description,
   openGraph: {
-    title: "PinitGrow — Pinterest Research Intelligence",
+    title: site.title,
     description: site.description,
     url: site.url,
     siteName: site.name,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PinitGrow — Pinterest Research Intelligence",
+    title: site.title,
     description: site.description,
     images: ["/product/keyword-explorer.webp"],
   },
