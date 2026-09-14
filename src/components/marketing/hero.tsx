@@ -12,7 +12,7 @@ export function Hero() {
         <div className="hero-copy">
           <p className="eyebrow"><span className="eyebrow-line" /> THE PINTEREST RESEARCH WORKSPACE</p>
           <h1>Your next big idea.<br />Backed by <span>Pinterest data.</span></h1>
-          <p className="hero-description">Find what people search. Understand what gets saved.<br className="hidden sm:block" /> Turn Pinterest research into content worth creating.</p>
+          <p className="hero-description">A subscription workspace for Pinterest keyword research, Pin comparisons, saved projects and rank tracking.<br className="hidden sm:block" /> Use public data to plan your next content test.</p>
           <div className="hero-actions">
             <Button size="lg" asChild><AppLink path="/register">Start Free Trial <ArrowRight /></AppLink></Button>
             <Button size="lg" variant="secondary" asChild><a href="#product-tour">Explore the product <ArrowDown /></a></Button>

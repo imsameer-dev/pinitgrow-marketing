@@ -18,6 +18,7 @@ export default function AboutPage() {
             lead={`${site.name} helps creators, publishers, niche site owners, and agencies decide what to publish using public Pinterest demand, ranking, and creator signals.`}
           />
           <div className="space-y-4 text-base leading-7 text-muted-foreground">
+            <p>For product, billing or business enquiries about {site.name}, email <a className="text-link" href={`mailto:${site.email}`}>{site.email}</a>.</p>
             <p>
               Most Pinterest research still lives in tabs, spreadsheets, and memory.
               PinitGrow puts keyword expansion, top-ranking pins, boards, accounts,
@@ -25,7 +26,7 @@ export default function AboutPage() {
             </p>
             <p>
               The public site is {site.url.replace("https://", "")}. The product is{" "}
-              {site.appHost}. Trial signup, login, and billing always happen in the app.
+              {site.appHost}. Trial signup and login happen in the app. Available payment options are shown when you choose a plan.
             </p>
             <p>
               We read publicly available logged-out Pinterest data. We do not claim an

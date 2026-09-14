@@ -6,7 +6,7 @@ export const site = {
   appHost: "app.pinitgrow.com",
   email: "support@pinitgrow.com",
   description:
-    "Find Pinterest keywords, winning pins, boards, accounts, trends, and ranking opportunities in one research platform.",
+    "Find Pinterest keywords, top-ranking Pins, boards, accounts, trends, and ranking opportunities in one research platform.",
 } as const;
 
 export const nav = [
@@ -14,6 +14,7 @@ export const nav = [
   { href: "/pricing", label: "Pricing" },
   { href: "/#usecases", label: "Use Cases" },
   { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const footerNav = {
@@ -59,7 +60,7 @@ export const hero = {
   eyebrow: "Pinterest research intelligence for serious growth",
   headlineBefore: "Stop guessing what works on ",
   headlineAccent: "Pinterest.",
-  sub: "PinitGrow shows you what people search, which pins are winning, who owns the niche, and where fresh opportunities are moving before everyone else sees them.",
+  sub: "PinitGrow shows you what people search, which Pins appear in search, and which accounts and topics to investigate.",
 } as const;
 
 export const problems = [
@@ -134,7 +135,7 @@ export const features = [
     badge: "Analyze",
     title: "Top Pins",
     body: "See which Pins are actually ranking and compare saves, engagement, freshness, titles, descriptions and source patterns.",
-    decision: "What does winning content in this niche look like?",
+    decision: "What does ranking content in this niche look like?",
     input: "A keyword.",
     output: "Ranking pins with saves, Pin Score, and destination links.",
     shot: "top-pins" as const,
@@ -147,7 +148,7 @@ export const features = [
     visual: "chart" as const,
     badge: "Measure",
     title: "Pin Stats",
-    body: "Inspect public engagement signals and understand why some Pins keep winning while others stall after the initial distribution burst.",
+    body: "Compare available public engagement counts and Pinterest topic labels across Pins.",
     decision: "Which Pin patterns are worth repeating?",
     input: "One or many pin URLs.",
     output: "Bulk stats, annotations, and destination data.",
@@ -249,7 +250,7 @@ export const steps = [
   {
     num: "03",
     title: "Build the content plan",
-    body: "Save winning opportunities, export research, create lists, and prioritize the topics most likely to move.",
+    body: "Save relevant opportunities, export research, create lists, and choose topics to test.",
   },
 ];
 
@@ -257,7 +258,7 @@ export const stats = [
   { value: "A–Z", label: "keyword expansion on every seed" },
   { value: "11", label: "research tools in one workspace" },
   { value: "Live", label: "pin, board, and account signals" },
-  { value: `${trialDays} days`, label: "full-access trial, no card" },
+  { value: `${trialDays} days`, label: "trial with usage limits, no card" },
 ] as const;
 
 export const deepDives = [
@@ -336,7 +337,7 @@ export const homeFaqs = [
   },
   {
     q: "Do I need a Pinterest account connected?",
-    a: "No for core research. Account connection is only needed for features that depend on your own tracked data.",
+    a: "No. Research uses publicly available Pinterest data. You do not need to provide your Pinterest password.",
   },
   {
     q: "Can I export the research?",
@@ -344,7 +345,7 @@ export const homeFaqs = [
   },
   {
     q: "Can I cancel anytime?",
-    a: "Yes. There is no long-term lock-in on monthly plans.",
+    a: "Yes. Contact support@pinitgrow.com to cancel. For purchases through Paddle, you can also use the subscription link in your receipt. Cancellation stops future renewals; refunds are handled separately.",
   },
   {
     q: "Is this only for bloggers?",
@@ -372,6 +373,6 @@ export const faqs = [
   },
   {
     q: "What happens when the trial ends?",
-    a: "Your account remains. Research routes are gated until a plan is activated. You can still open profile and security settings.",
+    a: "You are not automatically charged. Your account remains, but research tools require an active paid plan after the trial. Profile and security settings remain accessible.",
   },
 ];

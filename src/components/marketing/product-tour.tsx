@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import { productShots } from "@/lib/product-shots";
 
 const views = [
-  { id: "top-pins", label: "Discover winning pins", title: "Top Pins", description: "Look closer at the content already ranking in your niche.", icon: LayoutGrid },
+  { id: "top-pins", label: "Explore ranking Pins", title: "Top Pins", description: "Look closer at the content already ranking in your niche.", icon: LayoutGrid },
   { id: "keyword-explorer", label: "Find your next keyword", title: "Keyword Explorer", description: "Go beyond the obvious with A–Z and 0–9 keyword expansion.", icon: Search },
   { id: "trends", label: "Spot emerging trends", title: "Trends", description: "Explore growing searches and plan ahead of seasonal demand.", icon: TrendingUp },
 ] as const;

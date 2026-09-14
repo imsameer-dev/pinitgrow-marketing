@@ -29,7 +29,7 @@ export function SiteFooter() {
           <FooterCol title="Company" links={footerNav.company} />
           <FooterCol title="Legal" links={footerNav.legal} />
         </div>
-        <p className="mt-8 text-xs leading-relaxed text-muted-foreground">Independent research software. PinitGrow is not affiliated with or endorsed by Pinterest.</p>
+        <p className="mt-8 text-xs leading-relaxed text-muted-foreground">Independent research software; not affiliated with or endorsed by Pinterest.</p>
         <div className="mt-10 flex flex-col justify-between gap-3 border-t border-border pt-5 text-xs leading-relaxed text-[#7a756e] sm:flex-row sm:items-center">
           <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
           <span>

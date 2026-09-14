@@ -54,6 +54,12 @@ export default function PricingPage() {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              <tr className="border-t-2 border-border bg-background">
+                <th scope="row" className="font-semibold text-foreground">Monthly price (USD)</th>
+                {plans.map((plan) => <td key={plan.code} className="whitespace-nowrap font-semibold text-foreground">{plan.priceLabel}/month</td>)}
+              </tr>
+            </tfoot>
           </DataTable>
         </Container>
       </Section>
