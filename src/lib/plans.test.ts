@@ -19,7 +19,12 @@ describe("pricing catalog", () => {
       expect(value(2, row.label)).toBe(`${(baseline * 10).toLocaleString("en-US")}/day`);
     }
     expect(plans.map((_, i) => value(i, "Maximum pins/search"))).toEqual(["100", "300", "500"]);
-    expect(plans.map((_, i) => value(i, "Active trackers"))).toEqual(["5", "15", "50"]);
+    for (const plan of plans) {
+      expect(plan.rows.some((row) => ["Active trackers", "Pin Stats pins", "Retry failed image analysis"].includes(row.label))).toBe(false);
+      for (const label of ["Pin statistics", "Idea measurements", "Project image analysis"]) {
+        expect(plan.rows.find((row) => row.label === label)?.value).toBe("Included");
+      }
+    }
     expect(plans.map((_, i) => value(i, "Exports & cached results"))).toEqual(["Unlimited", "Unlimited", "Unlimited"]);
   });
 

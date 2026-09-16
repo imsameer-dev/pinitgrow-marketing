@@ -266,7 +266,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Get stats"],
     related: ["top-pins", "account-explorer", "lists"],
-    planRowLabels: ["Pin Stats pins"],
+    planRowLabels: ["Pin statistics"],
   },
   {
     slug: "account-explorer",
@@ -410,8 +410,8 @@ export const featurePages: FeaturePage[] = [
     ],
     extras: [
       {
-        title: "Shared tracker pool",
-        body: "Rank Tracker and Search Tracker share the same active-tracker and history-day limits on your plan.",
+        title: "Trackers without a capacity cap",
+        body: "Keep as many Rank and Search Trackers as you need. Manual check allowances and history windows depend on your plan; daily automatic checks are included.",
       },
       {
         title: "Email",
@@ -420,7 +420,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Track keyword", "Snapshot now", "Open history", "Remove tracker", "Schedule & email"],
     related: ["search-tracker", "top-pins", "trends"],
-    planRowLabels: ["Manual rank checks", "Active trackers", "Tracker history"],
+    planRowLabels: ["Manual rank checks", "Tracker history"],
   },
   {
     slug: "search-tracker",
@@ -470,7 +470,7 @@ export const featurePages: FeaturePage[] = [
     ],
     actions: ["Track search", "Snapshot now", "Compare snapshot dates", "Remove tracker"],
     related: ["rank-tracker", "top-pins", "trends"],
-    planRowLabels: ["Manual search checks", "Active trackers", "Tracker history"],
+    planRowLabels: ["Manual search checks", "Tracker history"],
   },
   {
     slug: "trends",
