@@ -10,6 +10,8 @@ export const site = {
     "Find Pinterest keywords, analyze top Pins and competitors, and track rankings with PinitGrow. Turn research into content ideas. Start a 3-day free trial.",
 } as const;
 
+export const homeUrl = `${site.url}/` as const;
+
 export const nav = [
   { href: "/features", label: "Product" },
   { href: "/pricing", label: "Pricing" },

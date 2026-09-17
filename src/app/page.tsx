@@ -6,14 +6,28 @@ import { Hero } from "@/components/marketing/hero";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { PricingSection } from "@/components/marketing/pricing-section";
 import { TrustStrip } from "@/components/marketing/trust-strip";
-import { site } from "@/lib/site";
+import { homeUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: site.title },
   description: site.description,
-  alternates: { canonical: "/" },
 };
 
 export default function HomePage() {
-  return <main><Hero /><TrustStrip /><FeatureGrid /><HowItWorks /><PricingSection /><FaqPreview /><CtaBanner /></main>;
+  return (
+    <>
+      {/* Next.js metadata API drops the trailing slash for the site origin. */}
+      <link rel="canonical" href={homeUrl} />
+      <meta property="og:url" content={homeUrl} />
+      <main>
+        <Hero />
+        <TrustStrip />
+        <FeatureGrid />
+        <HowItWorks />
+        <PricingSection />
+        <FaqPreview />
+        <CtaBanner />
+      </main>
+    </>
+  );
 }

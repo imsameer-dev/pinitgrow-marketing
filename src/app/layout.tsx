@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: site.title,
     description: site.description,
-    url: site.url,
     siteName: site.name,
     type: "website",
     images: [{ url: "/product/keyword-explorer.webp" }],
