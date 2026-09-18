@@ -8,6 +8,9 @@ test("home explains the product and hands off signup to the app", async ({ page 
   await expect(page.getByText("$10").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /Start Free Trial/ }).first()).toHaveAttribute("href", "https://app.pinitgrow.com/register");
   await expect(page.getByRole("link", { name: "Log in" }).first()).toHaveAttribute("href", "https://app.pinitgrow.com/login");
+  const launchBuff = page.getByRole("link", { name: "Featured on LaunchBuff" });
+  await expect(launchBuff).toHaveAttribute("href", "https://launchbuff.com/products/pinitgrow-pbdwfv");
+  await expect(launchBuff.getByRole("img")).toHaveAttribute("src", "https://launchbuff.com/badge-featured-dark.svg");
   await expect(page.locator(".directory-links a")).toHaveCount(11);
 });
 

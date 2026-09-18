@@ -18,6 +18,22 @@ export function Hero() {
             <Button size="lg" variant="secondary" asChild><a href="#product-tour">Explore the product <ArrowDown /></a></Button>
           </div>
           <p className="hero-reassurance"><span><Check /> {trialDays} days free</span><span><Check /> No credit card required</span></p>
+          <a
+            href="https://launchbuff.com/products/pinitgrow-pbdwfv"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Featured on LaunchBuff"
+            className="hero-launch-badge"
+          >
+            {/* Native img keeps LaunchBuff’s exact src for listing verification. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://launchbuff.com/badge-featured-dark.svg"
+              alt="Featured on LaunchBuff"
+              width={256}
+              height={80}
+            />
+          </a>
         </div>
         <ProductTour />
       </Container>
