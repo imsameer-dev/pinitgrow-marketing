@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { site } from "@/lib/site";
+import { productShots } from "@/lib/product-shots";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,13 +24,13 @@ export const metadata: Metadata = {
     description: site.description,
     siteName: site.name,
     type: "website",
-    images: [{ url: "/product/keyword-explorer.webp" }],
+    images: [{ url: productShots["keyword-explorer"].src }],
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
-    images: ["/product/keyword-explorer.webp"],
+    images: [productShots["keyword-explorer"].src],
   },
   icons: { icon: "/brand/pinitgrow-logo.svg" },
 };
